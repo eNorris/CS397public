@@ -1,4 +1,4 @@
-CS397private
-============
+CS397
+=====
 
-CS397 - Senior Design GUI code repository
+Repository for our CS397 (Comp Sci Senior Design) class
