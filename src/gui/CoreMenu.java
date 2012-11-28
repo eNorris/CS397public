@@ -73,7 +73,7 @@ public class CoreMenu extends JMenuBar{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
+					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
 		}
@@ -90,7 +90,7 @@ public class CoreMenu extends JMenuBar{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
+					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
 		}
@@ -106,7 +106,7 @@ public class CoreMenu extends JMenuBar{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
+					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
 		}
@@ -122,7 +122,7 @@ public class CoreMenu extends JMenuBar{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
+					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
 		}
@@ -138,7 +138,7 @@ public class CoreMenu extends JMenuBar{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					
+					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
 		}

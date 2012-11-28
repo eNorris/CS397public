@@ -1,5 +1,7 @@
 package dataContainers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JMenuItem;
@@ -33,6 +35,13 @@ public class DocumentFile extends MediaFile {
 
 		public DocumentFilePopUp(){
 			add(m_documentStuff);
+			m_documentStuff.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					System.out.print("Action: " + e.getActionCommand() + "\n");
+				}
+			});
 		}
 	}
 

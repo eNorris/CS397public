@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -166,8 +168,31 @@ public class MediaFile extends Component{
 		
 		public MediaFilePopUp(){
 			add(m_open);
+			m_open.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					System.out.print("Action: " + e.getActionCommand() + "\n");
+				}
+			});
+			
 			add(m_edit);
+			m_edit.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					System.out.print("Action: " + e.getActionCommand() + "\n");
+				}
+			});
+			
 			add(m_delete);
+			m_delete.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					System.out.print("Action: " + e.getActionCommand() + "\n");
+				}
+			});
 		}
 	}
 	
