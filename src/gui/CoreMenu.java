@@ -10,6 +10,8 @@ import javax.swing.tree.TreePath;
 
 import util.World;
 
+import searchEngine.JSearchBar;
+
 /**
  * Menu system at the top of the Application/Applet
  * 
@@ -29,6 +31,9 @@ public class CoreMenu extends JMenuBar{
 		add(generateEditMenu());
 		add(generateHelpMenu());
 		add(generateCrawlerMenu());
+		
+		JSearchBar searchBar = new JSearchBar();
+		add(searchBar);
 	}
 	
 	/**
@@ -211,22 +216,8 @@ public class CoreMenu extends JMenuBar{
 			this.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					
-//					if(m_authorFrame == null || m_authorFrame.isClosed()){
-//						m_authorFrame = new CS342Lab09AuthorIdFrame();
-//						add(m_authorFrame);
-//						m_authorFrame.toFront();
-//					}
-//					if(World.scheduleFrame == null || World.scheduleFrame.isClosed()){
-//						World.scheduleFrame = new ScheduleFrame();
-//						World.scheduleFrame.toFront();
-//						
-//						World.core.add(World.scheduleFrame);
-//					}
-//					World.core.
-					
-					
-					// TODO Auto-generated method stub
+					ScheduleDialog d = new ScheduleDialog();
+					d.setVisible(true);
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
