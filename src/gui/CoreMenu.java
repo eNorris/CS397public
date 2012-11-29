@@ -1,10 +1,14 @@
 package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.tree.TreePath;
+
+import util.World;
 
 /**
  * Menu system at the top of the Application/Applet
@@ -24,6 +28,7 @@ public class CoreMenu extends JMenuBar{
 		add(generateFileMenu());
 		add(generateEditMenu());
 		add(generateHelpMenu());
+		add(generateCrawlerMenu());
 	}
 	
 	/**
@@ -35,6 +40,15 @@ public class CoreMenu extends JMenuBar{
 		
 		toReturn.add(new MenuItemFileAdd());
 		toReturn.add(new MenuItemFileRemove());
+		
+		return toReturn;
+	}
+	
+	public JMenu generateCrawlerMenu(){
+		JMenu toReturn = new JMenu("Crawler");
+		
+		toReturn.add(new MenuItemCrawlerLaunch());
+		toReturn.add(new MenuItemCrawlerSchedule());
 		
 		return toReturn;
 	}
@@ -137,6 +151,81 @@ public class CoreMenu extends JMenuBar{
 			this.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					System.out.print("Action: " + e.getActionCommand() + "\n");
+				}
+			});
+		}
+	}
+	
+	/** Creates and returns a JMenuItem for Crawler->Launch */
+	private class MenuItemCrawlerLaunch extends JMenuItem{
+		private static final long serialVersionUID = 70274194970378772L;
+		public MenuItemCrawlerLaunch(){
+			super("Launch");
+			this.setEnabled(true);
+			this.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
+					
+					World.crawlerDirs.clear();
+					for(int i = 0; i < treePath.length; i++){
+						StringBuilder s = new StringBuilder();
+						for(int j = 0; j < treePath[i].getPathCount(); j++){
+							s.append((String) treePath[i].getPath()[j].toString() + "/");
+						}
+						World.crawlerDirs.add(new File(s.toString()));
+					}
+					
+					for(File dir : World.crawlerDirs)
+						System.out.print("Will crawl " + dir.toString() + "\n");
+					
+					System.out.print("\n\n");
+					
+//					for(File directory : World.crawlerDirs){
+//					// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
+//						if(!directory.isDirectory())
+//							continue;
+//						String cmd = "perl crawlDirectory.pl \"" + directory.toString() + "\"";
+//						try {
+//							Runtime.getRuntime().exec(cmd);
+//						} catch (IOException e1) {
+//							System.out.print("Could not run command: " + cmd);
+//							e1.printStackTrace();
+//						}
+//						System.out.print("Action: " + e.getActionCommand() + "\n");
+//					}
+				}
+			});
+		}
+	}
+	
+	/** Creates and returns a JMenuItem for Crawler->Launch */
+	private class MenuItemCrawlerSchedule extends JMenuItem{
+		private static final long serialVersionUID = 70274194970378772L;
+		public MenuItemCrawlerSchedule(){
+			super("Schedule...");
+			this.setEnabled(true);
+			this.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+//					if(m_authorFrame == null || m_authorFrame.isClosed()){
+//						m_authorFrame = new CS342Lab09AuthorIdFrame();
+//						add(m_authorFrame);
+//						m_authorFrame.toFront();
+//					}
+//					if(World.scheduleFrame == null || World.scheduleFrame.isClosed()){
+//						World.scheduleFrame = new ScheduleFrame();
+//						World.scheduleFrame.toFront();
+//						
+//						World.core.add(World.scheduleFrame);
+//					}
+//					World.core.
+					
+					
 					// TODO Auto-generated method stub
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}

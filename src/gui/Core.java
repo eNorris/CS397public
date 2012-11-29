@@ -5,6 +5,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import util.World;
+
 /**
  * The main panel that fills the Application version of the program
  * 
@@ -22,6 +24,8 @@ public class Core extends JPanel{
 	 * Sets the layout to BorderLayout, fills WEST with a FileTree and CENTER with a Wall
 	 */
 	public Core(){
+		World.core = this;
+		
 		setLayout(new BorderLayout());
 		
 		add(new FileTree(), BorderLayout.WEST);

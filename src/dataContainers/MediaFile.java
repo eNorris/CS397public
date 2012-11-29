@@ -1,5 +1,7 @@
 package dataContainers;
 
+import gui.Wall;
+
 import java.awt.AlphaComposite;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -154,8 +156,10 @@ public class MediaFile extends Component{
 	public boolean isInBounds(int x, int y){
 		return (x >= this.x + owner.space.cx && 			// left bound
 				x <= this.x + owner.space.cx + w && 		// right bound
-				y >= this.y + owner.space.cy && 			// top bound
-				y <= this.y + owner.space.cy + this.h);		// bottom bound
+//				y >= this.y + owner.space.cy && 			// top bound
+//				y <= this.y + owner.space.cy + this.h);		// bottom bound
+				y >= this.y + World.space.iy && 			// top bound
+				y <= this.y + World.space.iy + this.h);		// bottom bound
 	}
 	
 	public class MediaFilePopUp extends JPopupMenu{
@@ -197,6 +201,11 @@ public class MediaFile extends Component{
 	}
 	
 	public void popUp(Component caller, int x, int y){
+		
+
+//Wall theWall = (Wall) caller;
+//System.out.print("Popup: " + x + "  "  + y + "->" + theWall.currentLib + "\n");
+		
 		m_popUp.setEnabled(true);
 		m_popUp.setVisible(true);
 		m_popUp.show(caller, x, y);
@@ -230,6 +239,7 @@ public class MediaFile extends Component{
 	}
 	
 	public void draw(Graphics g){
+//		g.drawImage(thumbnail, x + owner.space.cx, y + owner.space.cy, null);
 //		g.drawImage(thumbnail, x + owner.space.ix, y + owner.space.iy, null);
 		g.drawImage(thumbnail, x + owner.space.ix, y + World.space.iy, null);
 	}

@@ -5,10 +5,7 @@ import java.io.File;
 import javax.swing.JMenuItem;
 
 public class VideoFile extends MediaFile {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -5913804900450779489L;
 	public String director = null;
 	public String title = null;

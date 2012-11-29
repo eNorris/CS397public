@@ -18,7 +18,7 @@ import dataContainers.MediaLibrary;
 public class Wall extends JPanel{
 
 	private static final long serialVersionUID = -5495354692927105826L;
-	MediaLibrary currentLib = new MediaLibrary();
+	public MediaLibrary currentLib = new MediaLibrary();
 	
 	private boolean m_moving = false;
 	
@@ -52,9 +52,10 @@ public class Wall extends JPanel{
 			public void mousePressed(MouseEvent ev) {
 				
 				if(ev.getButton() == MouseEvent.BUTTON1){
-					// left click => consum
+					// left click => consume
 					m_moving = true;
 					
+					// Reset space, everything is now relative to where I clicked the mouse
 					currentLib.space.wormHole(ev.getX(), ev.getY());
 					World.space.wormHole(ev.getX(), ev.getY());
 					

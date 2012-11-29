@@ -2,6 +2,14 @@ package util;
 
 import java.util.ArrayList;
 
+/**
+ * Class for tracking changes in space (2D) and time. Generally used as follows:<br>
+ * call wormhole(x,y) to reinitialize the SpaceTimeInt<br>
+ * call updateUniverse(newX, newY) any number of times to add coordinates<br>
+ * the relative change since clicking the mouse will be stored in ix and iy <br>
+ * @author Edward
+ *
+ */
 public class SpaceTimeInt {
 	
 	/**

@@ -2,6 +2,17 @@ package gui;
 
 import javax.swing.JFrame;
 
+/**
+ * Notes:
+ * 
+ * Does the crawler support single files or just directories?
+ * 
+ * 
+ * 
+ * @author Edward
+ *
+ */
+
 
 public class MainApplication extends JFrame{
 	

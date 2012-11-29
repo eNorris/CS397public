@@ -19,6 +19,9 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import santhoshTree.CheckTreeManager;
+import util.World;
+
 public class FileTree extends JPanel{
 
 	private static final long serialVersionUID = -2836582864395401650L;
@@ -37,11 +40,13 @@ public class FileTree extends JPanel{
 		fileDetailsTextArea.setPreferredSize(new Dimension(250, 50));
 		fileSystemModel = new FileSystemModel(new File(directory));
 		fileTree = new JTree(fileSystemModel);
-		fileTree.setEditable(true);
+		
+		World.treeManager = new CheckTreeManager(fileTree);
+
 		fileTree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent event) {
-			File file = (File) fileTree.getLastSelectedPathComponent();
-			fileDetailsTextArea.setText(getFileDetails(file));
+				File file = (File) fileTree.getLastSelectedPathComponent();
+				fileDetailsTextArea.setText(getFileDetails(file));
 			}
 		});
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(fileDetailsTextArea), 
