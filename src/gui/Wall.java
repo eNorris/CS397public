@@ -23,6 +23,8 @@ public class Wall extends JPanel{
 	private boolean m_moving = false;
 	
 	private SpringEq m_springEq = new SpringEq();
+	
+//	private int m_wallHeight = 0, m_wallWidth = 0;
 
 	Wall(){
 		setBackground(Color.BLUE);
@@ -99,7 +101,10 @@ public class Wall extends JPanel{
 		});
 		
 		// places the media files on the screen
-		currentLib.distribute();
+//		this.setVisible(true);
+//System.out.print("Height = " + this.getHeight() + "\n");
+		// FIXME - Moved this to paint()
+//		currentLib.distribute();
 		
 		// Start the timer
 		World.space.bigBang();
@@ -115,9 +120,18 @@ public class Wall extends JPanel{
 	
 	public void paint(Graphics g){
 		super.paint(g);
+//		m_wallHeight = this.getHeight();
+//		m_wallWidth = this.getWidth();
+		currentLib.distribute(this.getHeight());
 System.out.print("Wall:paint(): painting!\n");
 		currentLib.draw(g);
 	}
+	
+//	public void paintComponent(Graphics g){
+//		super.paintComponents(g);
+//		this.getH
+//		currentLib.draw(g);
+//	}
 	
 
 	public void bounder(){

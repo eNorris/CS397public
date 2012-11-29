@@ -1,7 +1,5 @@
 package dataContainers;
 
-import gui.Wall;
-
 import java.awt.AlphaComposite;
 import java.awt.Component;
 import java.awt.Graphics;

@@ -41,10 +41,14 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 	/**
 	 * Places the media files on the screen
 	 */
-	public void distribute(){
+	public void distribute(int height){
+		
+		System.out.print("@ paint(): h = " + height + "\n");
 		
 		// FIXME - calculate this
-		final int rows = 5;
+		int rows = height / World.config.getDimension().height;
+		if(rows == 0)
+			rows = 1;
 		
 		for(int i = 0; i < size(); i++){
 			
