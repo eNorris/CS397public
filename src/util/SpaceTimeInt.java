@@ -7,10 +7,13 @@ import java.util.ArrayList;
  * call wormhole(x,y) to reinitialize the SpaceTimeInt<br>
  * call updateUniverse(newX, newY) any number of times to add coordinates<br>
  * the relative change since clicking the mouse will be stored in ix and iy <br>
+ * 
  * @author Edward
  *
  */
 public class SpaceTimeInt {
+	
+	// FIXME - add another variable tx and ty to be total of ix and iy
 	
 	/**
 	 * Current x and y positions in pixels
@@ -29,7 +32,9 @@ public class SpaceTimeInt {
 	public int dx = 0, dy = 0;
 	
 	/**
-	 * sum of all dx and dy respectively since the last spacial collapse
+	 * sum of all dx and dy respectively since the last spacial collapse<br>
+	 * <b>Currently this implementation does NOT reset ix and iy. They are preserved for the
+	 * duration of the program. This should be reimplemented later</b>
 	 */
 	public int ix = 0, iy = 0;
 	
@@ -125,7 +130,7 @@ public class SpaceTimeInt {
 	 * @return The calling SpaceTimeInt after clearing cx, cy, lx, ly, dx, dy, vx, and vy
 	 */
 	public SpaceTimeInt spacialCollapse(){
-		// FIXME - Find a better way to do this than not resetting ix and iy
+		// FIXME - Find a better way to do this than not resetting ix and iy (implement sum(ix))
 		cx = cy = lx = ly = dx = dy = 0;//ix = iy = 0;
 		vx = vy = 0.0f;
 		return this;
