@@ -34,11 +34,11 @@ public class Wall extends JPanel{
 		
 		final JPanel m_self = this;
 
-		DBUtil Database = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
-		Database.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
+//		World.dbc = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
+//		World.dbc.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
 		
 		try {
-			ResultSet result = Database.Query("SELECT * FROM File");
+			ResultSet result = World.dbc.Query("SELECT * FROM File");
 			while (result != null && result.next()){
 				//TODO: Load database with sample dater
 				//TODO: Fix determining filetype
@@ -49,7 +49,7 @@ public class Wall extends JPanel{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Database.Disconnect();
+//		World.dbc.Disconnect();
 		
 //		for(int i = 0; i < 150; i++){
 //			

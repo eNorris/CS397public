@@ -18,4 +18,5 @@ public class World {
 	
 	public static ScheduleFrame scheduleFrame = null;
 	public static Core core = null;
+	public static DBUtil dbc = null;
 }

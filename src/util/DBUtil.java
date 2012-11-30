@@ -42,7 +42,8 @@ public class DBUtil {
 			m_connected = true;
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+//			return false;
 		}
 		return false;
 	}
