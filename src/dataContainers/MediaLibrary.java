@@ -43,7 +43,7 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 	 */
 	public void distribute(int height){
 		
-		System.out.print("@ paint(): h = " + height + "\n");
+//		System.out.print("@ paint(): h = " + height + "\n");
 		
 		// FIXME - calculate this
 		int rows = height / World.config.getDimension().height;

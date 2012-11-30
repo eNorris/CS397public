@@ -129,6 +129,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 		loupeButton = null;
 		super.uninstallComponents();
 	}
+	
 	protected JButton loupeButton;
 	protected JButton createLoupeButton() {
 		JButton button = new JButton(loupeAction);

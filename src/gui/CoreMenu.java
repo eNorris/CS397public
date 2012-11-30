@@ -83,127 +83,121 @@ public class CoreMenu extends JMenuBar{
 		return toReturn;
 	}
 
-	private class MenuItemFileAdd extends JMenuItem{
-		private static final long serialVersionUID = 2614146146651816448L;
-		public MenuItemFileAdd(){
-			super("Add");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.print("Action: " + e.getActionCommand() + "\n");
-				}
-			});
+//	private class MenuItemFileAdd extends JMenuItem{
+//		private static final long serialVersionUID = 2614146146651816448L;
+//		public MenuItemFileAdd(){
+//			super("Add");
+//			this.setEnabled(true);
+//			this.addActionListener(new ActionListener(){
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					// magic numbers
+//					if(e.getModifiers() == 0 || e.getModifiers() == 16){
+//					// TODO Auto-generated method stub
+//						System.out.print("Action: " + e.getActionCommand() + "\n");
+//					}
+//				}
+//			});
+//		}
+//	}
+	
+	private class MenuItemFileAdd extends MenuItemBase{
+		private static final long serialVersionUID = -5792123978651236809L;
+		public MenuItemFileAdd() {super("Add");}
+
+		@Override
+		public void doOnSelection() {
+			
 		}
 	}
 	
 	/** Creates and returns a JMenuItem for File->Remove */
-	private class MenuItemFileRemove extends JMenuItem{
+	private class MenuItemFileRemove extends MenuItemBase{
 		private static final long serialVersionUID = 9216262717029878271L;
+		public MenuItemFileRemove(){super("Remove");}
 
-		public MenuItemFileRemove(){
-			super("Remove");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.print("Action: " + e.getActionCommand() + "\n");
-				}
-			});
+		@Override
+		public void doOnSelection() {
+			// TODO Auto-generated method stub
 		}
 	}
 	
 	/** Creates and returns a JMenuItem for Edit->Change */
-	private class MenuItemEditChange extends JMenuItem{
+	private class MenuItemEditChange extends MenuItemBase{
 		private static final long serialVersionUID = -5554978003547610060L;
-		public MenuItemEditChange(){
-			super("Change");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.print("Action: " + e.getActionCommand() + "\n");
-				}
-			});
+		public MenuItemEditChange(){super("Change");}
+		
+		@Override
+		public void doOnSelection() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	
 	/** Creates and returns a JMenuItem for Edit->Modify */
-	private class MenuItemEditModify extends JMenuItem{
+	private class MenuItemEditModify extends MenuItemBase{
 		private static final long serialVersionUID = 1508756105178959414L;
 		public MenuItemEditModify(){
 			super("Modify");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.print("Action: " + e.getActionCommand() + "\n");
-				}
-			});
 		}
+		@Override
+		public void doOnSelection() {
+			// TODO Auto-generated method stub
+			
+		}
+			
 	}
 	
 	/** Creates and returns a JMenuItem for Help->About */
-	private class MenuItemHelpAbout extends JMenuItem{
+	private class MenuItemHelpAbout extends MenuItemBase{
 		private static final long serialVersionUID = 70274194970378772L;
 		public MenuItemHelpAbout(){
 			super("About");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					System.out.print("Action: " + e.getActionCommand() + "\n");
-				}
-			});
+		}
+		@Override
+		public void doOnSelection() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 	
 	/** Creates and returns a JMenuItem for Crawler->Launch */
-	private class MenuItemCrawlerLaunch extends JMenuItem{
+	private class MenuItemCrawlerLaunch extends MenuItemBase{
 		private static final long serialVersionUID = 70274194970378772L;
-		public MenuItemCrawlerLaunch(){
-			super("Launch");
-			this.setEnabled(true);
-			this.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
-					
-					World.crawlerDirs.clear();
-					for(int i = 0; i < treePath.length; i++){
-						StringBuilder s = new StringBuilder();
-						for(int j = 0; j < treePath[i].getPathCount(); j++){
-							s.append((String) treePath[i].getPath()[j].toString() + "/");
-						}
-						World.crawlerDirs.add(new File(s.toString()));
-					}
-					
-					for(File dir : World.crawlerDirs)
-						System.out.print("Will crawl " + dir.toString() + "\n");
-					
-					System.out.print("\n\n");
-					
-//					for(File directory : World.crawlerDirs){
-//					// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
-//						if(!directory.isDirectory())
-//							continue;
-//						String cmd = "perl crawlDirectory.pl \"" + directory.toString() + "\"";
-//						try {
-//							Runtime.getRuntime().exec(cmd);
-//						} catch (IOException e1) {
-//							System.out.print("Could not run command: " + cmd);
-//							e1.printStackTrace();
-//						}
-//						System.out.print("Action: " + e.getActionCommand() + "\n");
-//					}
+		public MenuItemCrawlerLaunch(){super("Launch");}
+		
+		@Override
+		public void doOnSelection() {
+			TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
+			
+			World.crawlerDirs.clear();
+			for(int i = 0; i < treePath.length; i++){
+				StringBuilder s = new StringBuilder();
+				for(int j = 0; j < treePath[i].getPathCount(); j++){
+					s.append((String) treePath[i].getPath()[j].toString() + "/");
 				}
-			});
+				World.crawlerDirs.add(new File(s.toString()));
+			}
+			
+			for(File dir : World.crawlerDirs)
+				System.out.print("Will crawl " + dir.toString() + "\n");
+			
+			System.out.print("\n\n");
+					
+//			for(File directory : World.crawlerDirs){
+//			// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
+//				if(!directory.isDirectory())
+//					continue;
+//				String cmd = "perl crawlDirectory.pl \"" + directory.toString() + "\"";
+//				try {
+//					Runtime.getRuntime().exec(cmd);
+//				} catch (IOException e1) {
+//					System.out.print("Could not run command: " + cmd);
+//					e1.printStackTrace();
+//				}
+//				System.out.print("Action: " + e.getActionCommand() + "\n");
+//			}
+			
 		}
 	}
 	

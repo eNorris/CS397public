@@ -4,14 +4,15 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JPanel;
 
+import util.DBUtil;
 import util.SpringEq;
 import util.World;
 
-import dataContainers.AudioFile;
-import dataContainers.GraphicFile;
 import dataContainers.MediaFile;
 import dataContainers.MediaLibrary;
 
@@ -24,26 +25,45 @@ public class Wall extends JPanel{
 	
 	private SpringEq m_springEq = new SpringEq();
 	
+
+	
 //	private int m_wallHeight = 0, m_wallWidth = 0;
 
 	Wall(){
 		setBackground(Color.BLUE);
 		
 		final JPanel m_self = this;
+
+		DBUtil Database = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
+		Database.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
 		
-		for(int i = 0; i < 150; i++){
-			
-			int randomness = World.rand.nextInt();
-			
-			// Randomly seed with some files
-			if(randomness % 3 == 0){
-				currentLib.add(new MediaFile("library/doc2.txt", "graphics/thumb1.bmp", currentLib));
-			}else if(randomness % 3 == 1){
-				currentLib.add(new AudioFile("library/test.mp3", "graphics/musicthumb.bmp", currentLib));
-			}else{
-				currentLib.add(new GraphicFile("library/testpic.png", "graphics/picthumb.bmp", currentLib));
+		try {
+			ResultSet result = Database.Query("SELECT * FROM File");
+			while (result != null && result.next()){
+				//TODO: Load database with sample dater
+				//TODO: Fix determining filetype
+				String filetype = result.getString("Type");
+				System.out.print("filetype found: " + filetype + "\n");
+				currentLib.add(new MediaFile(result.getString("Path"), "/CS397/graphics/pic1.bmp", currentLib));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		Database.Disconnect();
+		
+//		for(int i = 0; i < 150; i++){
+//			
+//			int randomness = World.rand.nextInt();
+//			
+//			// Randomly seed with some files
+//			if(randomness % 3 == 0){
+//				currentLib.add(new MediaFile("library/doc2.txt", "graphics/thumb1.bmp", currentLib));
+//			}else if(randomness % 3 == 1){
+//				currentLib.add(new AudioFile("library/test.mp3", "graphics/musicthumb.bmp", currentLib));
+//			}else{
+//				currentLib.add(new GraphicFile("library/testpic.png", "graphics/picthumb.bmp", currentLib));
+//			}
+//		}
 		
 		addMouseListener(new MouseListener(){
 			
@@ -120,20 +140,10 @@ public class Wall extends JPanel{
 	
 	public void paint(Graphics g){
 		super.paint(g);
-//		m_wallHeight = this.getHeight();
-//		m_wallWidth = this.getWidth();
 		currentLib.distribute(this.getHeight());
-System.out.print("Wall:paint(): painting!\n");
 		currentLib.draw(g);
 	}
 	
-//	public void paintComponent(Graphics g){
-//		super.paintComponents(g);
-//		this.getH
-//		currentLib.draw(g);
-//	}
-	
-
 	public void bounder(){
 		System.out.print("bounder!\n");
 		currentLib.space.ix += 1;
