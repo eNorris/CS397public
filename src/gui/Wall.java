@@ -49,6 +49,7 @@ public class Wall extends JPanel{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 //		World.dbc.Disconnect();
 		
 //		for(int i = 0; i < 150; i++){

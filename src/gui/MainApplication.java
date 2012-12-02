@@ -30,16 +30,16 @@ public class MainApplication extends JFrame{
 	public static void main(String[] args){
 		System.out.print("Debug Console...\n");
 		
-		World.dbc = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
-		if(!World.dbc.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword)){
+		World.dbc = new DBUtil();
+		if(!World.dbc.Connect()){
 			JFrame frame = new JFrame();
 			JOptionPane.showMessageDialog(frame,
-				    "Could not connect to database: " + DBUtil.DBPath + " \nIs the application already running?",
+				    "Could not connect to database: " + DBUtil.DBPath + DBUtil.DBName + " \nIs the application already running?",
 				    "Database Connection Error",
 				    JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		System.out.print("Connected to database: " + DBUtil.DBPath + "\n\n");
+		System.out.print("Connected to database: " + DBUtil.DBPath + DBUtil.DBName + "\n\n");
 		
 		JFrame frame = new JFrame();
 		

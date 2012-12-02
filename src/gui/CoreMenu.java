@@ -32,8 +32,8 @@ public class CoreMenu extends JMenuBar{
 		add(generateHelpMenu());
 		add(generateCrawlerMenu());
 		
-		JSearchBar searchBar = new JSearchBar();
-		add(searchBar);
+		//JSearchBar searchBar = new JSearchBar();
+		//add(searchBar);
 	}
 	
 	/**
