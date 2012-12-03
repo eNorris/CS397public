@@ -170,7 +170,7 @@ public class DBUtil {
 				Disconnect();
 				return true;
 			} else {
-				System.out.print("Failed to connect in order to build the database structure\n");
+				//System.out.print("Failed to connect in order to build the database structure\n");
 			}
 		}
 			

@@ -34,7 +34,7 @@ public class MainApplication extends JFrame{
 		if(!World.dbc.Connect()){
 			JFrame frame = new JFrame();
 			JOptionPane.showMessageDialog(frame,
-				    "Could not connect to database: " + DBUtil.DBPath + DBUtil.DBName + " \nIs the application already running?",
+				    "Could not connect to database: " + DBUtil.DBPath + DBUtil.DBName + "\nIs the application already running?",
 				    "Database Connection Error",
 				    JOptionPane.ERROR_MESSAGE);
 			return;
