@@ -1,18 +1,22 @@
 package gui;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
 
-import util.DBUtil;
 import util.SpringEq;
+import util.Util;
 import util.World;
 
+import dataContainers.AudioFile;
 import dataContainers.MediaFile;
 import dataContainers.MediaLibrary;
 
@@ -22,21 +26,13 @@ public class Wall extends JPanel{
 	public MediaLibrary currentLib = new MediaLibrary();
 	
 	private boolean m_moving = false;
-	
 	private SpringEq m_springEq = new SpringEq();
 	
-
-	
-//	private int m_wallHeight = 0, m_wallWidth = 0;
-
 	Wall(){
-		setBackground(Color.BLUE);
+		setOpaque(false);
 		
 		final JPanel m_self = this;
 
-//		World.dbc = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
-//		World.dbc.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
-		
 		try {
 			ResultSet result = World.dbc.Query("SELECT * FROM File");
 			while (result != null && result.next()){
@@ -64,6 +60,8 @@ public class Wall extends JPanel{
 //				currentLib.add(new GraphicFile("library/testpic.png", "graphics/picthumb.bmp", currentLib));
 //			}
 //		}
+		
+		loadFiles(getClass().getResource("/library").getPath());
 		
 		addMouseListener(new MouseListener(){
 			
@@ -95,14 +93,6 @@ public class Wall extends JPanel{
 
 			public void mouseReleased(MouseEvent arg0) {
 				m_moving = false;
-//				bounder();
-				
-//for(SpaceTimeInt i : World.space.history){
-//	System.out.print(i.toString() + "\n");
-//}
-//System.out.print("\n=========\n");
-				
-				
 			}
 		});
 		
@@ -112,19 +102,12 @@ public class Wall extends JPanel{
 			public void mouseDragged(MouseEvent ev) {
 				if(m_moving){
 					currentLib.space.universalUpdate(ev.getX(), ev.getY());
-		//			World.space.universalUpdate(ev.getX(), ev.getY());
 					repaint();
 				}
 			}
 
 			public void mouseMoved(MouseEvent arg0) {}
 		});
-		
-		// places the media files on the screen
-//		this.setVisible(true);
-//System.out.print("Height = " + this.getHeight() + "\n");
-		// FIXME - Moved this to paint()
-//		currentLib.distribute();
 		
 		// Start the timer
 		World.space.bigBang();
@@ -136,9 +119,9 @@ public class Wall extends JPanel{
 		m_springEq.A = 10.0;
 	}
 	
-	
-	
 	public void paint(Graphics g){
+		Util.drawGradientBackground(this, g);
+
 		super.paint(g);
 		currentLib.distribute(this.getHeight());
 		currentLib.draw(g);
@@ -172,6 +155,20 @@ System.out.print("Should repaint now!");
 //			if(World.rand.nextInt(30) != 0)
 //				bounder();
 //		}
+	}
+	
+	public void loadFiles(String directory){
+		File directoryFile = new File(directory);
+		File[] files = directoryFile.listFiles();
+		
+		for(int i = 0; i < files.length; i++)
+			System.out.print("Got " + files[i] + "\n");
+		
+		for(int i = 0; i < files.length; i++){
+			AudioFile a = new AudioFile(files[i], currentLib);
+			a.loadImg(Util.relPath("/graphics/pic1.bmp"));
+			currentLib.add(a);
+		}
 	}
 	
 }

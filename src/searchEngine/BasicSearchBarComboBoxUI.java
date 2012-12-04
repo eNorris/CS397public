@@ -3,6 +3,8 @@ package searchEngine;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.net.URL;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
@@ -133,7 +135,10 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 	protected JButton loupeButton;
 	protected JButton createLoupeButton() {
 		JButton button = new JButton(loupeAction);
-		ImageIcon loupe = new ImageIcon(getClass().getResource("loupe.png"));
+		URL urlRes = getClass().getResource("/graphics/loupe.png");
+		if(urlRes == null)
+			System.out.print("WARNING: BasicSearchBarComboBoxUI::loupeAction(): Could not find search icon!\n");
+		ImageIcon loupe = new ImageIcon(urlRes);
 		button.setIcon(loupe);
 		button.setRolloverIcon(makeRolloverIcon(loupe));
 		return button;
