@@ -18,8 +18,8 @@ CREATE TABLE File (
 	--Type			ENUM('A','I','M','T','O') DEFAULT 'O', -- Audio, Image, Movie, TV, Other
 	Type VARCHAR(1) CHECK Type IN ('A','I','M','T','O'), -- Audio, Image, Movie, TV, Other
 	Filesize 		VARCHAR(30),
-	ActualExtension		VARCHAR(6),		-- Reduce to 5 if we remove the . first
-	FileExtension		VARCHAR(5)
+	ActualExtension	VARCHAR(6),		-- Reduce to 5 if we remove the . first
+	FileExtension	VARCHAR(5)
 );
 
 CREATE TABLE FileUpdates ( -- Named LastUpdated on EER
