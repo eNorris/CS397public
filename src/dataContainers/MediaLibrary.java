@@ -1,5 +1,6 @@
 package dataContainers;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -13,8 +14,14 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 	private ArrayList<MediaLibrary> m_subLibrary = new ArrayList<MediaLibrary>();
 	public SpaceTimeInt space = new SpaceTimeInt();
 	
+	public Component owner = null;
+	
 	public MediaLibrary(){
 		// Do Nothing
+	}
+	
+	public MediaLibrary(Component owner){
+		this.owner = owner;
 	}
 
 	public MediaLibrary addLibrary(){

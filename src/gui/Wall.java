@@ -1,8 +1,5 @@
 package gui;
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -23,10 +20,12 @@ import dataContainers.MediaLibrary;
 public class Wall extends JPanel{
 
 	private static final long serialVersionUID = -5495354692927105826L;
-	public MediaLibrary currentLib = new MediaLibrary();
+	public MediaLibrary currentLib = new MediaLibrary(this);
 	
 	private boolean m_moving = false;
 	private SpringEq m_springEq = new SpringEq();
+	protected Wall self = this;
+//	private InfoPopup infoPopup = new InfoPopup();
 	
 	Wall(){
 		setOpaque(false);
@@ -66,11 +65,18 @@ public class Wall extends JPanel{
 		
 		addMouseListener(new MouseListener(){
 			
+			
+			
 			public void mouseClicked(MouseEvent ev) {}
 			public void mouseEntered(MouseEvent ev) {}
 			public void mouseExited(MouseEvent ev) {}
 			
 			public void mousePressed(MouseEvent ev) {
+				
+//				currentLib.get(0).popUpInfo(self, ev.getX(), ev.getY());
+//				currentLib.get(0).popUp(self, ev.getX(), ev.getY());
+				
+	//			infoPopup.activate(ev.getX(), ev.getY());
 				
 				if(ev.getButton() == MouseEvent.BUTTON1){
 					// left click => consume
@@ -107,7 +113,11 @@ public class Wall extends JPanel{
 				}
 			}
 
-			public void mouseMoved(MouseEvent arg0) {}
+			public void mouseMoved(MouseEvent ev) {
+				for(MediaFile f : currentLib){
+					f.spaceListener.update(ev.getX(), ev.getY());
+				}
+			}
 		});
 		
 		// Start the timer

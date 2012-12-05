@@ -1,7 +1,9 @@
 package dataContainers;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -13,9 +15,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import util.SpaceTimeInt;
+import util.SpaceTimeListener;
+import util.Util;
 import util.World;
 
 public class MediaFile extends Component{
@@ -37,6 +44,7 @@ public class MediaFile extends Component{
 	public MediaLibrary owner = null;
 	
 	protected MediaFilePopUp m_popUp = new MediaFilePopUp();
+	protected InfoPopup m_infoPopup = new InfoPopup();
 	
 	/**Name of the file without extension ("C:\temp\file.txt" => "file")*/
 	public String fileName = null;
@@ -45,6 +53,7 @@ public class MediaFile extends Component{
 	public String fileExt = null;
 	
 	public int x = 0, y = 0, w = 0, h = 0;
+	public SpaceTimeListener spaceListener = new SpaceTimeListener(this);
 	
 	// This is the main constructor that everyone else calls
 	public MediaFile(File file, MediaLibrary owner){
@@ -200,15 +209,16 @@ public class MediaFile extends Component{
 		}
 	}
 	
-	public void popUp(Component caller, int x, int y){
-		
-
-//Wall theWall = (Wall) caller;
-//System.out.print("Popup: " + x + "  "  + y + "->" + theWall.currentLib + "\n");
-		
+	public void popUp(Component caller, int x, int y){	
 		m_popUp.setEnabled(true);
 		m_popUp.setVisible(true);
 		m_popUp.show(caller, x, y);
+	}
+	
+	public void popUpInfo(Component caller, int x, int y){
+		m_infoPopup.setEnabled(true);
+		m_infoPopup.setVisible(true);
+		m_infoPopup.show(caller, x, y);
 	}
 	
 	//Author: Mkyong
@@ -239,9 +249,99 @@ public class MediaFile extends Component{
 	}
 	
 	public void draw(Graphics g){
-//		g.drawImage(thumbnail, x + owner.space.cx, y + owner.space.cy, null);
-//		g.drawImage(thumbnail, x + owner.space.ix, y + owner.space.iy, null);
 		g.drawImage(thumbnail, x + owner.space.ix, y + World.space.iy, null);
+	}
+	
+	public class InfoPopup extends JPopupMenu{
+
+		private static final long serialVersionUID = -3564833458604078898L;
+		
+		public SpaceTimeInt space = new SpaceTimeInt();
+		
+		public boolean active = false;
+
+		public InfoPopup(){
+			setSize(200, 200);
+			
+			add(new JMenuItem("MediaFile::InfoPopup::cat"));
+			add(new JMenuItem("dog"));
+			add(new InfoPanel());
+			
+//			add
+		}
+		
+		public void setVisible(boolean vis){
+			super.setVisible(vis);
+		}
+		
+		public void update(int x, int y){
+			if(active){
+				space.universalUpdate(x, y);
+			}
+		}
+		
+		public void activate(int x, int y){
+			space.wormHole(x, y);
+	System.out.print("activating to x = " + x + "\n");
+			active = true;
+			setVisible(true);
+		}
+		
+		public void deactivate(){
+			active = false;
+			setVisible(false);
+		}
+		
+		public void paint(Graphics g){
+			g.fillRect(0, 0, 200, 200);
+			super.paint(g);
+		}
+		
+		public class InfoPanel extends JPanel{
+			private static final long serialVersionUID = 359115013335470480L;
+			
+			private Image m_playOn = null;
+			private Image m_playOff = null;
+			private Image m_stopOn = null;
+			private Image m_stopOff = null;
+			
+			private boolean m_playing = false;
+			private boolean m_hovering = false;
+
+			InfoPanel(){
+				setLayout(new FlowLayout());
+				add(new JLabel("what?"));
+				add(new JLabel("vox!"));
+				setOpaque(false);
+				
+				m_playOn = Util.loadImgRes("/graphics/play1Large.png");
+				m_playOff = Util.loadImgRes("/graphics/play2Large.png");
+				m_stopOn = Util.loadImgRes("/graphics/stop1Large.png");
+				m_stopOff = Util.loadImgRes("/graphics/stop2Large.png");
+				
+				setSize(500, 500);
+				setBackground(Color.RED);
+			}
+			
+			public void paint(Graphics g){
+				super.paint(g);
+				Image drawer = null;
+				if(m_playing){
+					if(m_hovering){
+						drawer = m_stopOn;
+					}else{
+						drawer = m_stopOff;
+					}
+				}else{
+					if(m_hovering){
+						drawer = m_playOn;
+					}else{
+						drawer = m_playOff;
+					}
+				}
+				g.drawImage(drawer, 0, 0, 50, 50, this);
+			}
+		}
 	}
 }
 
