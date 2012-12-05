@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import util.World;
 
@@ -28,8 +29,18 @@ public class Core extends JPanel{
 		
 		setLayout(new BorderLayout());
 		
-		add(new FileTree(), BorderLayout.WEST);
-		add(new Wall(), BorderLayout.CENTER);
+		FileTree filetree = new FileTree();
+		Wall wall = new Wall();
+		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filetree, wall);
+		//splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+		splitPane.setOneTouchExpandable(true);
+		add(splitPane, BorderLayout.CENTER);
+		
+		//add(new FileTree(), BorderLayout.WEST);
+		//add(new Wall(), BorderLayout.CENTER);
+		
+		
 	}
 	
 	/**

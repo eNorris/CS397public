@@ -1,4 +1,5 @@
 package gui;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.File;
@@ -32,6 +33,8 @@ public class FileTree extends JPanel{
 	FileTree(){
 //		setBackground(Color.RED);
 		setPreferredSize(new Dimension(250, 100));
+		
+		setLayout(new BorderLayout());
 		
 		String directory = "C:\\";
 		
