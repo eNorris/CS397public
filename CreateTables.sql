@@ -195,7 +195,6 @@ CREATE TABLE Song (
 
 CREATE TABLE AudioFileDetails (
 	Path			VARCHAR(500) PRIMARY KEY,
-	Codec			VARCHAR(20),
 	BitRate			VARCHAR(20),
 	AudioLayer		VARCHAR(20),
 	ChannelMode		VARCHAR(20),
