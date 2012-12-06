@@ -238,12 +238,14 @@ public class CoreMenu extends JMenuBar{
 			
 			System.out.print("\n\n");
 			
-			File locker = new File(System.getProperty("user.dir")+"\\data\\scripts\\sqllock");
+			File locker = new File(System.getProperty("user.dir")+"\\scripts\\sqllock");
 			try {
+
 				if(!locker.createNewFile())
-					System.out.print("Could not create file: " + locker.getAbsolutePath());
+					System.out.print("Could not create file: " + locker.getAbsolutePath() + "\n");
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.print("Could not create file: " + locker.getAbsolutePath() + "\n");
 			}
 					
 			for(File directory : World.crawlerDirs){

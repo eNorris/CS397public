@@ -23,8 +23,8 @@ public class Util {
 	 * @return
 	 */
 	public static String relPath(String relativePath){
-System.out.print((System.getProperty("user.dir") + "\\" + relativePath).replace("\\", "/"));
-		return (System.getProperty("user.dir") + "//" + relativePath).replace("/", "\\");
+System.out.print((System.getProperty("user.dir") + relativePath).replace("\\", "/"));
+		return (System.getProperty("user.dir") + relativePath).replace("/", "\\");
 //		URL resURL = util.getClass().getResource(relativePath);
 //		if(resURL == null)
 //			System.out.print("WARNING: Util::relPath(): null URL from '" + relativePath + "'\n");
