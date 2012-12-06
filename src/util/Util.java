@@ -19,7 +19,7 @@ public class Util {
 	public static String relPath(String relativePath){
 		URL resURL = util.getClass().getResource(relativePath);
 		if(resURL == null)
-			System.out.print("WARNING: Util::relPath(): null URL\n");
+			System.out.print("WARNING: Util::relPath(): null URL from '" + relativePath + "'\n");
 		String k = resURL.getPath();
 		if(k == null){
 			System.out.print("WARNING: Util::relPath(): null path\n");

@@ -161,10 +161,6 @@ public class MediaFile extends Component{
 	}
 	
 	public boolean isInBounds(int x, int y){
-//		return (x >= this.x + owner.space.cx && 			// left bound
-//				x <= this.x + owner.space.cx + w && 		// right bound
-//				y >= this.y + owner.space.cy && 			// top bound
-//				y <= this.y + owner.space.cy + this.h);		// bottom bound
 		return (x >= this.x + owner.space.ix && 			// left bound
 				x <= this.x + owner.space.ix + w && 		// right bound
 				y >= this.y + World.space.iy && 			// top bound
@@ -266,8 +262,6 @@ public class MediaFile extends Component{
 			add(new JMenuItem("MediaFile::InfoPopup::cat"));
 			add(new JMenuItem("dog"));
 			add(new InfoPanel());
-			
-//			add
 		}
 		
 		public void setVisible(boolean vis){
@@ -282,7 +276,6 @@ public class MediaFile extends Component{
 		
 		public void activate(int x, int y){
 			space.wormHole(x, y);
-	System.out.print("activating to x = " + x + "\n");
 			active = true;
 			setVisible(true);
 		}

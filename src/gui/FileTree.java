@@ -32,14 +32,14 @@ public class FileTree extends JPanel{
 	
 	FileTree(){
 //		setBackground(Color.RED);
-		setPreferredSize(new Dimension(250, 100));
+//		setPreferredSize(new Dimension(250, 100));
 		
 		setLayout(new BorderLayout());
 		
 		String directory = "C:\\";
 		
 		fileDetailsTextArea.setEditable(false);
-		fileDetailsTextArea.setPreferredSize(new Dimension(250, 50));
+		fileDetailsTextArea.setPreferredSize(new Dimension(0, 50));
 		fileSystemModel = new FileSystemModel(new File(directory));
 		fileTree = new JTree(fileSystemModel);
 		
@@ -49,6 +49,7 @@ public class FileTree extends JPanel{
 			public void valueChanged(TreeSelectionEvent event) {
 				File file = (File) fileTree.getLastSelectedPathComponent();
 				fileDetailsTextArea.setText(getFileDetails(file));
+				fileDetailsTextArea.setCaretPosition(0);
 			}
 		});
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, new JScrollPane(fileDetailsTextArea), 
@@ -67,8 +68,18 @@ public class FileTree extends JPanel{
 			return "";
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Name: " + file.getName() + "\n");
+		int ypref = 1;
+		int xpref = fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Name: " + file.getName() + "\n");
 		buffer.append("Path: " + file.getPath() + "\n");
+		if(fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Path: " + file.getPath() + "\n") > xpref)
+			xpref = fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Path: " + file.getPath() + "\n");
+		ypref++;
+		
 		buffer.append("Size: " + file.length() + "\n");
+		if(fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Size: " + file.length() + "\n") > xpref)
+			xpref = fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Size: " + file.length() + "\n");
+		ypref++;
+		fileDetailsTextArea.setPreferredSize(new Dimension(xpref, ypref * fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).getHeight()));
 		return buffer.toString();
 	}
 }

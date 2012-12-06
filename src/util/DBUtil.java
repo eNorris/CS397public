@@ -119,7 +119,7 @@ public class DBUtil {
 			success = m_statement.execute(arg);
 			success = true;
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			//System.out.print("Failure executing command: \"" + arg + "\"\n");
 			success = false;
 		}

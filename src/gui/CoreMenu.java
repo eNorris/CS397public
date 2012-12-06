@@ -2,12 +2,14 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.tree.TreePath;
 
+import util.Util;
 import util.World;
 
 import searchEngine.JSearchBar;
@@ -179,24 +181,26 @@ public class CoreMenu extends JMenuBar{
 				World.crawlerDirs.add(new File(s.toString()));
 			}
 			
-			for(File dir : World.crawlerDirs)
-				System.out.print("Will crawl " + dir.toString() + "\n");
+//			for(File dir : World.crawlerDirs)
+//				System.out.print("Will crawl " + dir.toString() + "\n");
 			
 			System.out.print("\n\n");
 					
-//			for(File directory : World.crawlerDirs){
-//			// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
-//				if(!directory.isDirectory())
-//					continue;
-//				String cmd = "perl crawlDirectory.pl \"" + directory.toString() + "\"";
-//				try {
-//					Runtime.getRuntime().exec(cmd);
-//				} catch (IOException e1) {
-//					System.out.print("Could not run command: " + cmd);
-//					e1.printStackTrace();
-//				}
-//				System.out.print("Action: " + e.getActionCommand() + "\n");
-//			}
+			for(File directory : World.crawlerDirs){
+			// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
+				if(!directory.isDirectory())
+					continue;
+				String scriptToRun = Util.relPath("/scripts/overarchingScript.pl");
+				String cmd = "perl " + scriptToRun + " \"" + directory.toString() + "\"";
+System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd + "\n");
+				try {
+					Runtime.getRuntime().exec(cmd);
+				} catch (IOException e1) {
+					System.out.print("Could not run command: " + cmd);
+					e1.printStackTrace();
+				}
+//				System.out.print("Action: " + e1.getActionCommand() + "\n");
+			}
 			
 		}
 	}

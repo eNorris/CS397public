@@ -2,6 +2,8 @@ package dataContainers;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import util.SpaceTimeInt;
@@ -70,4 +72,59 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 		}
 	}
 	
+	public void constructFromDB(){
+		
+		ResultSet results = World.dbc.Query("SELECT * FROM File");
+		try {
+			while(results != null && results.next()){
+				String filetype = results.getString("Type");
+				String filepath = results.getString("Path");
+				
+				// A => Audio, I => Image, M => Movie, T => TV, O => Other
+				if(filetype.equals("A")){
+					add(AudioFile.createFromDB(this, results));
+				}//else if(filetype.equals("I")){
+				//	add(GraphicFile.createFromDB(this, results));
+				//}
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

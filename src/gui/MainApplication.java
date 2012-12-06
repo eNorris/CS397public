@@ -48,13 +48,14 @@ public class MainApplication extends JFrame{
 		
 		frame.setJMenuBar(new CoreMenu());
 		
-		frame.setTitle("title");
+		frame.setTitle("Media Manager");
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setVisible(true);
 	}
 	
 	public void finalize(){
-		World.dbc.Disconnect();
+		if(World.dbc != null)
+			World.dbc.Disconnect();
 	}
 }

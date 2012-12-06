@@ -135,7 +135,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 	protected JButton loupeButton;
 	protected JButton createLoupeButton() {
 		JButton button = new JButton(loupeAction);
-		URL urlRes = getClass().getResource("/graphics/loupe.png");
+		URL urlRes = getClass().getResource("/loupe.png");
 		if(urlRes == null)
 			System.out.print("WARNING: BasicSearchBarComboBoxUI::loupeAction(): Could not find search icon!\n");
 		ImageIcon loupe = new ImageIcon(urlRes);

@@ -31,19 +31,47 @@ public class Wall extends JPanel{
 		setOpaque(false);
 		
 		final JPanel m_self = this;
+		
+		currentLib.constructFromDB();
+		
+//		World.dbc.Execute("");
 
 		try {
 			ResultSet result = World.dbc.Query("SELECT * FROM File");
+			boolean b = false;
 			while (result != null && result.next()){
+				b = true;
 				//TODO: Load database with sample dater
 				//TODO: Fix determining filetype
 				String filetype = result.getString("Type");
 				System.out.print("filetype found: " + filetype + "\n");
-				currentLib.add(new MediaFile(result.getString("Path"), "/CS397/graphics/pic1.bmp", currentLib));
+				currentLib.add(new MediaFile(result.getString("Path"), Util.relPath("/pic1.bmp"), currentLib));
+			}
+			if(!b){
+				System.out.print("No files found!\n");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+//		if(!World.dbc.Execute("INSERT INTO User VALUES ('Joe', 'phhhd')")){
+//			System.out.print("EVEN MORE DEATH!!!!!!\n");
+//		}
+		
+//		ResultSet r = World.dbc.Query("SELECT * from User");
+//		try {
+//			boolean b = false;
+//			while(r != null && r.next()){
+//				b = true;
+//				System.out.print("users: " + r.getString("Username"));
+//			}
+//			if(!b){
+//				System.out.print("DEATH!\n");
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		World.dbc.Disconnect();
 		
@@ -61,7 +89,7 @@ public class Wall extends JPanel{
 //			}
 //		}
 		
-		loadFiles(getClass().getResource("/library").getPath());
+//		loadFiles(getClass().getResource("/library").getPath());
 		
 		addMouseListener(new MouseListener(){
 			
