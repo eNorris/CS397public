@@ -4,7 +4,7 @@
 
 BEGIN{
 #	$dir = 
-#	unshift @INC, "C:\\strawberry\\perl\\lib";
+	unshift @INC, "C:/strawberry/perl/lib";
 }
 
 use Cwd;

@@ -49,12 +49,8 @@ public class VideoFile extends MediaFile {
 	public static VideoFile createFromDB(MediaLibrary parent, ResultSet dbResult){
 		
 		String filepath = null;
-		String imgFile = null;
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
-			
-			
-			
 			
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");

@@ -98,6 +98,9 @@ public class MediaFile extends Component{
 	
 	public void setThumbnail(Image thumbnail){
 		this.thumbnail = thumbnail;
+//		if(thumbnail != null){
+//			thumbnail.
+//		}
 	}
 	
 	public void setFile(File file){
@@ -111,7 +114,7 @@ public class MediaFile extends Component{
 	}
 	
 	public void fetchMetaData(){
-		// FIXME - not yet implemented
+		// FIXME - Not needed - the script does this
 	}
 	
 	protected void resolveFileSize(){
