@@ -186,7 +186,7 @@ public class CoreMenu extends JMenuBar{
 			System.out.print("\n\n");
 					
 			for(File directory : World.crawlerDirs){
-				String imgDir = Util.relPath("/data/images");
+				String imgDir = Util.relPath("/data");
 //				if(!directory.isDirectory())
 //					continue;
 				String scriptToRun = Util.relPath("/overarchingScript.pl");
