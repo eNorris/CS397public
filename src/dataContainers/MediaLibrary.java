@@ -13,7 +13,7 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 
 	private static final long serialVersionUID = -7147719263849293488L;
 	
-	private ArrayList<MediaLibrary> m_subLibrary = new ArrayList<MediaLibrary>();
+	public ArrayList<MediaLibrary> m_subLibrary = new ArrayList<MediaLibrary>();
 	public SpaceTimeInt space = new SpaceTimeInt();
 	
 	public Component owner = null;

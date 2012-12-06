@@ -4,9 +4,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
 import util.Util;
@@ -158,7 +160,9 @@ public class CoreMenu extends JMenuBar{
 		}
 		@Override
 		public void doOnSelection() {
-			// TODO Auto-generated method stub
+			String helpText = "Media Manager Project Solution created for CS397 by:\n" + 
+					"Ben Campbell, Gerald Hold, Edward Norris, and Thomas Reese\n";
+			JOptionPane.showMessageDialog(new JFrame(), helpText, "About", JOptionPane.INFORMATION_MESSAGE);
 			
 		}
 	}

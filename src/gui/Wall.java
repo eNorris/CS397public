@@ -23,7 +23,6 @@ public class Wall extends JPanel{
 	private boolean m_moving = false;
 	private SpringEq m_springEq = new SpringEq();
 	protected Wall self = this;
-//	private InfoPopup infoPopup = new InfoPopup();
 	
 	Wall(){
 		setOpaque(false);
