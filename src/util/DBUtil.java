@@ -296,6 +296,7 @@ public class DBUtil {
 			m_resultSet = m_statement.executeQuery(arg);
 		} catch (SQLException e) {
 			System.out.print("Error executing query \"" + arg + "\"!\n");
+			e.printStackTrace();
 			m_resultSet = null;
 		}
 		return m_resultSet;

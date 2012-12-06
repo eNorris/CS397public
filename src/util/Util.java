@@ -16,6 +16,12 @@ import javax.swing.JPanel;
 
 public class Util {
 	public static Util util = new Util();
+	
+	/**
+	 * Takes a relative path and returns an absolute path
+	 * @param relativePath
+	 * @return
+	 */
 	public static String relPath(String relativePath){
 		URL resURL = util.getClass().getResource(relativePath);
 		if(resURL == null)
@@ -38,7 +44,11 @@ public class Util {
 		g2d.fillRect(0, 0, w, h);
 	}
 	
-	
+	/**
+	 * Takes a relative path and returns an image
+	 * @param resPath
+	 * @return
+	 */
 	public static Image loadImgRes(String resPath){
 		File file = new File(Util.relPath(resPath));
 		try{
@@ -59,6 +69,7 @@ public class Util {
 		return null;
 	}
 
+	//Author Mkyong
 	private static BufferedImage resizeImage(BufferedImage originalImage, int type){
 		BufferedImage resizedImage = new BufferedImage(World.config.getDimension().width, World.config.getDimension().height, type);
 		Graphics2D g = resizedImage.createGraphics();

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 import javax.swing.JMenuItem;
 
-import util.Util;
-
 public class GraphicFile extends MediaFile{
 
 	private static final long serialVersionUID = -7780276326943050864L;
