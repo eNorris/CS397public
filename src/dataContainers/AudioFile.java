@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import util.Util;
-import util.World;
 
 public class AudioFile extends MediaFile{
 
@@ -56,19 +55,15 @@ public class AudioFile extends MediaFile{
 	public static AudioFile createFromDB(MediaLibrary parent, ResultSet dbResult){
 		
 		String filepath = null;
+		String imgPath = null;
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+			imgPath = Util.relPath("/audio.png");
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		AudioFile toReturn = new AudioFile(filepath, Util.relPath("/pic1.bmp"), parent);
-		
-//		World.dbc.Q
-		
+		AudioFile toReturn = new AudioFile(filepath, imgPath, parent);
 		return toReturn;
 	}
 

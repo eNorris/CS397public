@@ -3,8 +3,12 @@ package dataContainers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JMenuItem;
+
+import util.Util;
 
 public class GraphicFile extends MediaFile{
 
@@ -48,4 +52,33 @@ public class GraphicFile extends MediaFile{
 			});
 		}
 	}
+	
+	public static GraphicFile createFromDB(MediaLibrary parent, ResultSet dbResult){
+		
+		String filepath = null;
+//		String imgPath = null;
+		try {
+			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+//			imgPath = dbResult.getString("");
+		} catch (SQLException e) {
+			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
+			e.printStackTrace();
+		}
+		GraphicFile toReturn = new GraphicFile(filepath, filepath, parent);
+		return toReturn;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 package dataContainers;
 
 import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JMenuItem;
 
@@ -42,6 +44,24 @@ public class VideoFile extends MediaFile {
 			super(file);
 //			add(m_vlc);
 		}
+	}
+	
+	public static VideoFile createFromDB(MediaLibrary parent, ResultSet dbResult){
+		
+		String filepath = null;
+		String imgFile = null;
+		try {
+			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+			
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
+			e.printStackTrace();
+		}
+		VideoFile toReturn = new VideoFile(filepath, filepath, parent);
+		return toReturn;
 	}
 
 }

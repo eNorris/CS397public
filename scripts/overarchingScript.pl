@@ -2,16 +2,7 @@
 # $Author: Thomas Reese $
 # $Date: 2012-10-27 $
 
-BEGIN{
-	use Cwd qw(abs_path);
-	$scriptDir = substr $0, 0, index($0, '\overarchingScript.pl');
-	$scriptDir =~ s/\\/\//g;
-#	@INC = ();
-	unshift @INC, "$scriptDir/perlresources";
-}
-
-#use Cwd;
-
+use Cwd;
 use Image::ExifTool qw(:Public); # Needs to be installed
 # use Music::Tag; # Needs to be installed, DateTimeX::Easy, DateTime::Format::Natural, boolean, DateTime::Format::Flexible, DateTime::Format::Builder, Class::Factory::Util, DateTime::Format::Strptime
 use JSON -support_by_pp;
@@ -34,9 +25,6 @@ my $tvdbApiKey = '064C9518B1E8731B';
 my $ua = new LWP::UserAgent;
 $ua->timeout(120); 
 
-my $scriptDir = abs_path($0);
-
-print "@overatchingScript.pl[30]: overarchingScript.pl path = $scriptDir";
 
 if (1>=$#ARGV+1) {
 	chdir($ARGV[0]);
