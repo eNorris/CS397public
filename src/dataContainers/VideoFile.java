@@ -17,7 +17,7 @@ public class VideoFile extends MediaFile {
 
 	public VideoFile(File file, MediaLibrary owner) {
 		super(file, owner);
-		m_popUp = new VideoFilePopUp();
+		m_popUp = new VideoFilePopUp(this);
 	}
 	
 	public VideoFile(String filePath, MediaLibrary owner){
@@ -38,7 +38,8 @@ public class VideoFile extends MediaFile {
 		private static final long serialVersionUID = -8325188779288235566L;
 		protected JMenuItem m_vlc = new JMenuItem("Open in VLC");
 
-		public VideoFilePopUp(){
+		public VideoFilePopUp(VideoFile file){
+			super(file);
 //			add(m_vlc);
 		}
 	}

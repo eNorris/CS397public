@@ -18,7 +18,7 @@ public class AudioFile extends MediaFile{
 
 	public AudioFile(File file, MediaLibrary owner) {
 		super(file, owner);
-		m_popUp = new AudioFilePopUp();
+		m_popUp = new AudioFilePopUp(this);
 	}
 
 	public AudioFile(String filePath, MediaLibrary owner){
@@ -39,7 +39,8 @@ public class AudioFile extends MediaFile{
 		private static final long serialVersionUID = -15185330828987922L;
 		protected JMenuItem m_soundStuff = new JMenuItem("Sound stuff...");
 
-		public AudioFilePopUp(){
+		public AudioFilePopUp(AudioFile file){
+			super(file);
 			add(new JLabel(" == TEST LABEL =="));
 			add(m_soundStuff);
 			m_soundStuff.addActionListener(new ActionListener(){
@@ -56,7 +57,7 @@ public class AudioFile extends MediaFile{
 		
 		String filepath = null;
 		try {
-			filepath = dbResult.getString("Path");
+			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
 			// TODO Auto-generated catch block

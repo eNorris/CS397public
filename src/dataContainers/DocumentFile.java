@@ -12,7 +12,7 @@ public class DocumentFile extends MediaFile {
 
 	public DocumentFile(File file, MediaLibrary owner) {
 		super(file, owner);
-		m_popUp = new DocumentFilePopUp();
+		m_popUp = new DocumentFilePopUp(this);
 	}
 
 	public DocumentFile(String filePath, MediaLibrary owner){
@@ -29,11 +29,17 @@ public class DocumentFile extends MediaFile {
 	}
 
 	public class DocumentFilePopUp extends MediaFilePopUp{
+		
+//		public DocumentFilePopUp(DocumentFile file){
+//			super(file);
+//		}
 
 		private static final long serialVersionUID = 7864855181664320942L;
 		protected JMenuItem m_documentStuff = new JMenuItem("doc stuff...");
 
-		public DocumentFilePopUp(){
+		public DocumentFilePopUp(DocumentFile file){
+			super(file);
+			
 			add(m_documentStuff);
 			m_documentStuff.addActionListener(new ActionListener(){
 				@Override

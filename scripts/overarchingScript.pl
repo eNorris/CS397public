@@ -6,7 +6,8 @@ BEGIN{
 	use Cwd qw(abs_path);
 	$scriptDir = substr $0, 0, index($0, '\overarchingScript.pl');
 	$scriptDir =~ s/\\/\//g;
-#	unshift @INC, $scriptDir
+#	@INC = ();
+	unshift @INC, "$scriptDir/perlresources";
 }
 
 #use Cwd;

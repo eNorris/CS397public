@@ -34,7 +34,8 @@ public class Wall extends JPanel{
 		
 		currentLib.constructFromDB();
 		
-//		World.dbc.Execute("");
+		World.dbc.ResetTables();
+		World.dbc.Execute("INSERT INTO File VALUES('C:\\code\\CS397_2\\CS397private\\library\\', 'test.mp3', 'A', '45', 'exe', 'exe')");
 
 		try {
 			ResultSet result = World.dbc.Query("SELECT * FROM File");
@@ -155,7 +156,7 @@ public class Wall extends JPanel{
 		m_springEq.mass = 1.0;
 		m_springEq.spring = 1.0;
 		m_springEq.dampen = m_springEq.getCriticalDampening();
-		m_springEq.A = 10.0;
+//		m_springEq.A = 10.0;
 	}
 	
 	public void paint(Graphics g){

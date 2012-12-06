@@ -2,7 +2,6 @@ package searchEngine;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.UIManager;
 
@@ -54,6 +53,6 @@ public class JSearchBar extends JComboBox<SearchEngine>{
         updateUI();
     }
     @Override protected void processFocusEvent(java.awt.event.FocusEvent e) {
-        System.out.println("processFocusEvent");
+ //       System.out.println("processFocusEvent");
     }
 }

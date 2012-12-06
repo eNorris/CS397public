@@ -3,6 +3,7 @@ package dataContainers;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -43,7 +45,7 @@ public class MediaFile extends Component{
 	
 	public MediaLibrary owner = null;
 	
-	protected MediaFilePopUp m_popUp = new MediaFilePopUp();
+	protected MediaFilePopUp m_popUp = new MediaFilePopUp(this);
 	protected InfoPopup m_infoPopup = new InfoPopup();
 	
 	/**Name of the file without extension ("C:\temp\file.txt" => "file")*/
@@ -172,15 +174,36 @@ public class MediaFile extends Component{
 		protected JMenuItem m_open = new JMenuItem("Open");
 		protected JMenuItem m_edit = new JMenuItem("Edit");
 		protected JMenuItem m_delete = new JMenuItem("Delete");
+		
+		protected MediaFilePopUp self = this;
+		protected MediaFile owner = null;
+		
+//		public MediaFilePopUp(MediaFile mediaFile){
+//			owner = mediaFile;
+//		}
 
 		private static final long serialVersionUID = -8357288887563917285L;
 		
-		public MediaFilePopUp(){
+		public MediaFilePopUp(MediaFile mediaFile){
+			owner = mediaFile;
+			
 			add(m_open);
 			m_open.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+//					JFileChooser fileChooser = new JFileChooser();
+//					if(fileChooser.showOpenDialog(self) == JFileChooser.APPROVE_OPTION){
+//						File f = fileChooser.getSelectedFile();
+//					}
+					try {
+						if(self.owner.file != null)
+							Desktop.getDesktop().open(self.owner.file);
+						else
+							System.out.print("Could not open file.\n");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
@@ -307,10 +330,10 @@ public class MediaFile extends Component{
 				add(new JLabel("vox!"));
 				setOpaque(false);
 				
-				m_playOn = Util.loadImgRes("/graphics/play1Large.png");
-				m_playOff = Util.loadImgRes("/graphics/play2Large.png");
-				m_stopOn = Util.loadImgRes("/graphics/stop1Large.png");
-				m_stopOff = Util.loadImgRes("/graphics/stop2Large.png");
+				m_playOn = Util.loadImgRes("/play1Large.png");
+				m_playOff = Util.loadImgRes("/play2Large.png");
+				m_stopOn = Util.loadImgRes("/stop1Large.png");
+				m_stopOff = Util.loadImgRes("/stop2Large.png");
 				
 				setSize(500, 500);
 				setBackground(Color.RED);
