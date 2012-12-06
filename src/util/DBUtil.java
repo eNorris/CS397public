@@ -151,29 +151,20 @@ public class DBUtil {
 	}
 
 	public boolean ResetTables() {
-		if(m_connected){
-			//System.out.print("Building the database structure.\n");
-			Execute("DROP ALL TABLES");
+		boolean initconnected = m_connected;
+		if(initconnected || Connect(true)) { //try to make the database//System.out.print("Building the database structure.\n");
+			Execute("DROP ALL OBJECTS");
 			if(!ExecuteFile(CreateTablesSql)){ //make the database tables and structure
-				System.out.print("Could not execute \"" + CreateTablesSql + "\" to construct the database!\n");
+				System.out.print("Could not construct the database!\n");
+				if(!initconnected)
+					Disconnect();
 				return false;
 			}
-		} else {
-			//System.out.print("Connecting and building the database structure\n");
-			if(Connect(true)) { //try to make the database//System.out.print("Building the database structure.\n");
-				Execute("DROP ALL OBJECTS");
-				if(!ExecuteFile(CreateTablesSql)){ //make the database tables and structure
-					System.out.print("Could not execute \"" + CreateTablesSql + "\" to construct the database!\n");
-					Disconnect();
-					return false;
-				}
+			if(!initconnected)
 				Disconnect();
-				return true;
-			} else {
-				//System.out.print("Failed to connect in order to build the database structure\n");
-			}
+			return true;
 		}
-
+		System.out.print("Failed to connect in order to build the database structure\n");
 		return false;
 	}
 

@@ -4,8 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.JPanel;
 
@@ -32,70 +30,12 @@ public class Wall extends JPanel{
 		
 		final JPanel m_self = this;
 		
+		//World.dbc.ResetTables();
+		//World.dbc.Execute("INSERT INTO File VALUES('C:\\code\\CS397_2\\CS397private\\library\\', 'test.mp3', 'A', '45', 'exe', 'exe')");
+		
 		currentLib.constructFromDB();
 		
-		World.dbc.ResetTables();
-		World.dbc.Execute("INSERT INTO File VALUES('C:\\code\\CS397_2\\CS397private\\library\\', 'test.mp3', 'A', '45', 'exe', 'exe')");
-
-		try {
-			ResultSet result = World.dbc.Query("SELECT * FROM File");
-			boolean b = false;
-			while (result != null && result.next()){
-				b = true;
-				//TODO: Load database with sample dater
-				//TODO: Fix determining filetype
-				String filetype = result.getString("Type");
-				System.out.print("filetype found: " + filetype + "\n");
-				currentLib.add(new MediaFile(result.getString("Path"), Util.relPath("/pic1.bmp"), currentLib));
-			}
-			if(!b){
-				System.out.print("No files found!\n");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-//		if(!World.dbc.Execute("INSERT INTO User VALUES ('Joe', 'phhhd')")){
-//			System.out.print("EVEN MORE DEATH!!!!!!\n");
-//		}
-		
-//		ResultSet r = World.dbc.Query("SELECT * from User");
-//		try {
-//			boolean b = false;
-//			while(r != null && r.next()){
-//				b = true;
-//				System.out.print("users: " + r.getString("Username"));
-//			}
-//			if(!b){
-//				System.out.print("DEATH!\n");
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-//		World.dbc.Disconnect();
-		
-//		for(int i = 0; i < 150; i++){
-//			
-//			int randomness = World.rand.nextInt();
-//			
-//			// Randomly seed with some files
-//			if(randomness % 3 == 0){
-//				currentLib.add(new MediaFile("library/doc2.txt", "graphics/thumb1.bmp", currentLib));
-//			}else if(randomness % 3 == 1){
-//				currentLib.add(new AudioFile("library/test.mp3", "graphics/musicthumb.bmp", currentLib));
-//			}else{
-//				currentLib.add(new GraphicFile("library/testpic.png", "graphics/picthumb.bmp", currentLib));
-//			}
-//		}
-		
-//		loadFiles(getClass().getResource("/library").getPath());
-		
 		addMouseListener(new MouseListener(){
-			
-			
-			
 			public void mouseClicked(MouseEvent ev) {}
 			public void mouseEntered(MouseEvent ev) {}
 			public void mouseExited(MouseEvent ev) {}
@@ -105,7 +45,7 @@ public class Wall extends JPanel{
 //				currentLib.get(0).popUpInfo(self, ev.getX(), ev.getY());
 //				currentLib.get(0).popUp(self, ev.getX(), ev.getY());
 				
-	//			infoPopup.activate(ev.getX(), ev.getY());
+//				infoPopup.activate(ev.getX(), ev.getY());
 				
 				if(ev.getButton() == MouseEvent.BUTTON1){
 					// left click => consume

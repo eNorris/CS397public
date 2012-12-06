@@ -73,20 +73,22 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 	}
 	
 	public void constructFromDB(){
-		
 		ResultSet results = World.dbc.Query("SELECT * FROM File");
+		boolean success = false;
 		try {
 			while(results != null && results.next()){
+				success = true;
 				String filetype = results.getString("Type");
 				String filepath = results.getString("Path");
-				
 				// A => Audio, I => Image, M => Movie, T => TV, O => Other
 				if(filetype.equals("A")){
 					add(AudioFile.createFromDB(this, results));
 				}//else if(filetype.equals("I")){
 				//	add(GraphicFile.createFromDB(this, results));
 				//}
-				
+			}
+			if(!success){
+				System.out.print("No files found!\n");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -96,35 +98,3 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -23,12 +23,11 @@ public class MainApplication extends JFrame{
 	private static final long serialVersionUID = 4648172894076113183L;
 
 	MainApplication(){
-//		World.dbc = new DBUtil(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
-//		World.dbc.Connect(DBUtil.DBPath, DBUtil.DBUsername, DBUtil.DBPassword);
 	}
 	
 	public static void main(String[] args){
 		System.out.print("Debug Console...\n");
+		System.out.print("Running in: " + System.getProperty("user.dir") + "\n");
 
 		World.dbc = new DBUtil();
 		if(!World.dbc.Connect()){
