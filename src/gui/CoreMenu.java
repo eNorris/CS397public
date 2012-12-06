@@ -31,10 +31,13 @@ public class CoreMenu extends JMenuBar{
 	JButton searchbutton = new JButton("Search");
 	JButton searchclearbutton = new JButton("Clear Search");
 	
+	public Core owner = null;
+	
 	/**
 	 * Default Constructor - Adds the appropriate Menus
 	 */
-	CoreMenu(){
+	CoreMenu(Core owner){
+		this.owner = owner;
 //		add(generateFileMenu());
 //		add(generateEditMenu());
 		add(generateCrawlerMenu());
@@ -54,10 +57,11 @@ public class CoreMenu extends JMenuBar{
 	private class SearchTextHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!searchbox.getText().isEmpty()) {
-				System.out.print("Got: "+searchbox.getText()+"\n");
-				Wall.showSearchLib = true;
-			} else {
-				Wall.showSearchLib = false;
+				Wall.showSearchLib = searchbox.getText();
+				owner.wall.repaint();
+			} else if(!Wall.showSearchLib.equals("")){
+				Wall.showSearchLib = "";
+				owner.wall.repaint();
 			}
 		}
 	}
@@ -65,10 +69,11 @@ public class CoreMenu extends JMenuBar{
 	private class SearchButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (!searchbox.getText().isEmpty()) {
-				System.out.print("Got: "+searchbox.getText()+"\n");
-				Wall.showSearchLib = true;
-			} else {
-				Wall.showSearchLib = false;
+				Wall.showSearchLib = searchbox.getText();
+				owner.wall.repaint();
+			} else if(!Wall.showSearchLib.equals("")){
+				Wall.showSearchLib = "";
+				owner.wall.repaint();
 			}
 		}
 	}
@@ -77,7 +82,10 @@ public class CoreMenu extends JMenuBar{
 		public void actionPerformed(ActionEvent e) {
 			if (!searchbox.getText().isEmpty()) {
 				searchbox.setText("");
-				Wall.showSearchLib = false;
+				if(!Wall.showSearchLib.equals("")){
+					Wall.showSearchLib = "";
+					owner.wall.repaint();
+				}
 			}
 		}
 	}
@@ -242,6 +250,9 @@ System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + c
 					e1.printStackTrace();
 				}
 			}
+			
+			
+			
 		}
 	}
 	
