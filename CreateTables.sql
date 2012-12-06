@@ -86,19 +86,14 @@ CREATE TABLE Poster (
 );
 
 CREATE TABLE VideoFileDetails (
-	Title			VARCHAR(100),
-	Year			INTEGER,
-	Path			VARCHAR(500),
-	Duration		INTEGER,
+	Path			VARCHAR(500) PRIMARY KEY,
+	Duration		VARCHAR(20),
 	Width			INTEGER,
 	Height			INTEGER,
 	Codec			VARCHAR(20),
-	AudioRate		VARCHAR(20),
-	AudioEncoding		VARCHAR(20),
+	AudioRate		INTEGER,
+	AudioEncoding	VARCHAR(20),
 	FrameRate		VARCHAR(20),
-	CONSTRAINT pk_VideoFileDetailsID PRIMARY KEY (Title, Year),
-	FOREIGN KEY (Title) REFERENCES Video (Title),
-	FOREIGN KEY (Year) REFERENCES Video (Year),
 	FOREIGN KEY (Path) REFERENCES File (Path)
 );
 
@@ -178,7 +173,7 @@ CREATE TABLE Album (
 	CONSTRAINT pk_AlbumID PRIMARY KEY (Title,Artist)
 );
 
-CREATE TABLE Audio (
+CREATE TABLE Song (
 	Title			VARCHAR(100),
 	Band			VARCHAR(100),
 	Year			INTEGER,
@@ -199,21 +194,14 @@ CREATE TABLE Audio (
 );
 
 CREATE TABLE AudioFileDetails (
-	Title			VARCHAR(100),
-	Band			VARCHAR(100),
-	Year			INTEGER,
-	Path			VARCHAR(500),
+	Path			VARCHAR(500) PRIMARY KEY,
 	Codec			VARCHAR(20),
 	BitRate			VARCHAR(20),
 	AudioLayer		VARCHAR(20),
 	ChannelMode		VARCHAR(20),
 	SampleRate		VARCHAR(20),
 	Duration		VARCHAR(20),
-	CONSTRAINT pk_AudioFileDetailsID PRIMARY KEY (Path, Title, Band, Year),
-	FOREIGN KEY (Path) REFERENCES File (Path),
-	FOREIGN KEY (Title) REFERENCES Audio (Title),
-	FOREIGN KEY (Band) REFERENCES Audio (Band),
-	FOREIGN KEY (Year) REFERENCES Audio (Year)
+	FOREIGN KEY (Path) REFERENCES File (Path)
 );
 
 CREATE TABLE Hierarchy (
