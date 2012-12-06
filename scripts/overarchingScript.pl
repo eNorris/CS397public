@@ -2,6 +2,10 @@
 # $Author: Thomas Reese $
 # $Date: 2012-10-27 $
 
+BEGIN{
+	unshift @INC, "C:\\strawberry\\perl\\lib";
+}
+
 use Cwd;
 use Image::ExifTool qw(:Public); # Needs to be installed
 # use Music::Tag; # Needs to be installed, DateTimeX::Easy, DateTime::Format::Natural, boolean, DateTime::Format::Flexible, DateTime::Format::Builder, Class::Factory::Util, DateTime::Format::Strptime
