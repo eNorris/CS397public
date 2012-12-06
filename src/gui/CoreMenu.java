@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -235,6 +237,14 @@ public class CoreMenu extends JMenuBar{
 			}
 			
 			System.out.print("\n\n");
+			
+			File locker = new File(System.getProperty("user.dir")+"\\data\\scripts\\sqllock");
+			try {
+				if(!locker.createNewFile())
+					System.out.print("Could not create file: " + locker.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 					
 			for(File directory : World.crawlerDirs){
 				String imgDir = System.getProperty("user.dir")+"\\data";//Util.relPath("/data");
@@ -253,7 +263,8 @@ System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + c
 				}
 			}
 			
-			
+			Executor exe =Executors.newCachedThreadPool();
+			exe.execute(new ExecSQL());
 			
 		}
 	}
