@@ -237,11 +237,13 @@ public class CoreMenu extends JMenuBar{
 			System.out.print("\n\n");
 					
 			for(File directory : World.crawlerDirs){
-				String imgDir = Util.relPath("/data");
+				String imgDir = System.getProperty("user.dir")+"\\data";//Util.relPath("/data");
 //				if(!directory.isDirectory())
 //					continue;
-				String scriptToRun = Util.relPath("/overarchingScript.pl");
-				String cmd = "perl " + scriptToRun +  "\"" + imgDir + "\"  \"" + directory.toString() + "\"";
+//				String scriptToRun = Util.relPath("/overarchingScript.pl");
+				String scriptToRun = System.getProperty("user.dir")+"\\scripts\\overarchingScript.pl";
+
+				String cmd = "perl \"" + scriptToRun +  "\" \"" + imgDir + "\"  \"" + directory.toString() + "\"";
 System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd + "\n");
 				try {
 					Runtime.getRuntime().exec(cmd);
