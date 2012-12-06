@@ -16,7 +16,7 @@ CREATE TABLE File (
 	Path			VARCHAR(500) PRIMARY KEY,
 	Filename		VARCHAR(100) NOT NULL,
 	--Type			ENUM('A','I','M','T','O') DEFAULT 'O', -- Audio, Image, Movie, TV, Other
-	Type 			CHAR(1) CHECK Type IN ('A','I','M','T','O'), -- Audio, Image, Movie, TV, Other
+	Type 			CHAR(1) CHECK Type IN ('A','S','I','M','T','V','O'), -- Audio, Image, Movie, TV, Other
 	Filesize 		VARCHAR(30),
 	ActualExtension	VARCHAR(6),		-- Reduce to 5 if we remove the . first
 	FileExtension	VARCHAR(5)
