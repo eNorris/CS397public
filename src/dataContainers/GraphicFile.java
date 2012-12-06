@@ -39,8 +39,8 @@ public class GraphicFile extends MediaFile{
 		public GraphicFilePopUp(GraphicFile file){
 			super(file);
 			
-			addSeparator();
-			add(m_stuff);
+//			addSeparator();
+//			add(m_stuff);
 			m_stuff.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {

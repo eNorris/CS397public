@@ -19,12 +19,21 @@ public class Wall extends JPanel{
 
 	private static final long serialVersionUID = -5495354692927105826L;
 	public MediaLibrary currentLib = new MediaLibrary(this);
+	public MediaLibrary searchLib = new MediaLibrary(this);
+	
+//	public static boolean showSearchLib = false;
+	public static String showSearchLib = "";
 	
 	private boolean m_moving = false;
 	private SpringEq m_springEq = new SpringEq();
 	protected Wall self = this;
 	
-	Wall(){
+	protected boolean hasLoadedSearch = false;
+	
+	public Core owner = null;
+	
+	Wall(Core owner){
+		this.owner = owner;
 		setOpaque(false);
 		
 		final JPanel m_self = this;
@@ -102,8 +111,16 @@ public class Wall extends JPanel{
 		Util.drawGradientBackground(this, g);
 
 		super.paint(g);
-		currentLib.distribute(this.getHeight());
-		currentLib.draw(g);
+		
+		if(!showSearchLib.equals("")){
+			if(!hasLoadedSearch)
+				searchLib.searchLib(currentLib, showSearchLib);
+			searchLib.distribute(this.getHeight());
+			searchLib.draw(g);
+		}else{
+			currentLib.distribute(this.getHeight());
+			currentLib.draw(g);
+		}
 	}
 	
 	public void bounder(){
@@ -145,7 +162,7 @@ System.out.print("Should repaint now!");
 		
 		for(int i = 0; i < files.length; i++){
 			AudioFile a = new AudioFile(files[i], currentLib);
-			a.loadImg(Util.relPath("/graphics/pic1.bmp"));
+			a.loadImg(Util.relPath("/pic1.bmp"));
 			currentLib.add(a);
 		}
 	}

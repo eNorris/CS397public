@@ -40,8 +40,8 @@ public class AudioFile extends MediaFile{
 
 		public AudioFilePopUp(AudioFile file){
 			super(file);
-			add(new JLabel(" == TEST LABEL =="));
-			add(m_soundStuff);
+//			add(new JLabel(" == TEST LABEL =="));
+//			add(m_soundStuff);
 			m_soundStuff.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {

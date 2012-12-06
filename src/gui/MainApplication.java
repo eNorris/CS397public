@@ -47,7 +47,7 @@ public class MainApplication extends JFrame{
 		Core core = new Core();
 		frame.getContentPane().add(core);
 		
-		frame.setJMenuBar(new CoreMenu());
+		frame.setJMenuBar(new CoreMenu(core));
 		
 		frame.setTitle("Media Manager");
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);

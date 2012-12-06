@@ -18,6 +18,9 @@ public class Core extends JPanel{
 
 	/** Generated via Eclipse */
 	private static final long serialVersionUID = -5499945898085501882L;
+	
+	public Wall wall = new Wall(this);
+	public CoreMenu coreMenu = new CoreMenu(this);
 
 	/**
 	 * Default Constructor <br><br>
@@ -30,7 +33,7 @@ public class Core extends JPanel{
 		setLayout(new BorderLayout());
 		
 		FileTree filetree = new FileTree();
-		Wall wall = new Wall();
+//		Wall wall = new Wall();
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filetree, wall);
 		//splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);

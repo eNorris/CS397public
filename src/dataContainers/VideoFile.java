@@ -6,6 +6,9 @@ import java.sql.SQLException;
 
 import javax.swing.JMenuItem;
 
+import util.Util;
+import util.World;
+
 public class VideoFile extends MediaFile {
 
 	private static final long serialVersionUID = -5913804900450779489L;
@@ -42,21 +45,36 @@ public class VideoFile extends MediaFile {
 
 		public VideoFilePopUp(VideoFile file){
 			super(file);
-//			add(m_vlc);
 		}
 	}
 	
 	public static VideoFile createFromDB(MediaLibrary parent, ResultSet dbResult){
 		
 		String filepath = null;
+		String imgPath = null;
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+			
+			ResultSet r = World.dbc.Query("SELECT * FROM Movie WHERE Path=" + filepath);
+			if(r == null){
+				System.out.print("ERROR: Could not find Movie matching key Path=" + filepath);
+			}else{
+				imgPath = r.getString("RTID");
+			}
+			if(imgPath != null)
+				imgPath = imgPath + "thumb.jpg";
 			
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
 			e.printStackTrace();
 		}
-		VideoFile toReturn = new VideoFile(filepath, filepath, parent);
+		
+		VideoFile toReturn;
+		if(imgPath != null){
+			toReturn = new VideoFile(filepath, imgPath, parent);
+		}else{
+			toReturn = new VideoFile(filepath, Util.relPath("/graphics/video.png"), parent);
+		}
 		return toReturn;
 	}
 

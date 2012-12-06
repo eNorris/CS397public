@@ -244,10 +244,9 @@ public class DBUtil {
 	}
 
 	public boolean Locked() {
-		System.out.print(System.getProperty("user.dir")+"\\"+DBPath+DBName+".lock.db\n");
+		//System.out.print(System.getProperty("user.dir")+"\\"+DBPath+DBName+".lock.db\n");
 		File f = new File(System.getProperty("user.dir")+"\\"+DBPath+DBName+".lock.db");
-		if(f.exists()) { return true; }
-		return false;
+		return f.exists();
 	}
 
 	public boolean Connected() {

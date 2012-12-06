@@ -214,17 +214,12 @@ public class MediaFile extends Component{
 			m_open.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					JFileChooser fileChooser = new JFileChooser();
-//					if(fileChooser.showOpenDialog(self) == JFileChooser.APPROVE_OPTION){
-//						File f = fileChooser.getSelectedFile();
-//					}
 					try {
 						if(self.owner.file != null)
 							Desktop.getDesktop().open(self.owner.file);
 						else
 							System.out.print("Could not open file.\n");
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					System.out.print("Action: " + e.getActionCommand() + "\n");
@@ -235,7 +230,14 @@ public class MediaFile extends Component{
 			m_edit.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					try {
+						if(self.owner.file != null)
+							Desktop.getDesktop().edit(self.owner.file);
+						else
+							System.out.print("Could not open file.\n");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
@@ -244,7 +246,14 @@ public class MediaFile extends Component{
 			m_delete.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+//					try {
+//						if(self.owner.file != null)
+//							Desktop.getDesktop().(self.owner.file);
+//						else
+//							System.out.print("Could not open file.\n");
+//					} catch (IOException e1) {
+//						e1.printStackTrace();
+//					}
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
@@ -383,15 +392,3 @@ public class MediaFile extends Component{
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

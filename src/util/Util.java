@@ -23,14 +23,16 @@ public class Util {
 	 * @return
 	 */
 	public static String relPath(String relativePath){
-		URL resURL = util.getClass().getResource(relativePath);
-		if(resURL == null)
-			System.out.print("WARNING: Util::relPath(): null URL from '" + relativePath + "'\n");
-		String k = resURL.getPath();
-		if(k == null){
-			System.out.print("WARNING: Util::relPath(): null path\n");
-		}
-		return k;
+System.out.print((System.getProperty("user.dir") + "\\" + relativePath).replace("\\", "/"));
+		return (System.getProperty("user.dir") + "\\" + relativePath).replace("\\", "/");
+//		URL resURL = util.getClass().getResource(relativePath);
+//		if(resURL == null)
+//			System.out.print("WARNING: Util::relPath(): null URL from '" + relativePath + "'\n");
+//		String k = resURL.getPath();
+//		if(k == null){
+//			System.out.print("WARNING: Util::relPath(): null path\n");
+//		}
+//		return k;
 	}
 	
 	public static void drawGradientBackground(JPanel panel, Graphics g){

@@ -94,7 +94,24 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 	
-		
+//	public static MediaLibrary searchLib(MediaLibrary lib, String searchStr){
+//		MediaLibrary toReturn = new MediaLibrary();
+//		for(MediaFile file : lib){
+//			if(file.file.getName().contains(searchStr))
+//				toReturn.add(file);
+//		}
+//		return toReturn;
+//	}
+	
+	public MediaLibrary searchLib(MediaLibrary lib, String searchStr){
+		//MediaLibrary toReturn = new MediaLibrary();
+		for(MediaFile file : lib){
+			if(file.file.getName().contains(searchStr))
+				add(file);
+		}
+		return this;
+	//	return toReturn;
 	}
 }
