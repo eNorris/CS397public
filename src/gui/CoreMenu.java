@@ -14,8 +14,6 @@ import javax.swing.tree.TreePath;
 import util.Util;
 import util.World;
 
-import searchEngine.JSearchBar;
-
 /**
  * Menu system at the top of the Application/Applet
  * 
@@ -31,10 +29,11 @@ public class CoreMenu extends JMenuBar{
 	 * Default Constructor - Adds the appropriate Menus
 	 */
 	CoreMenu(){
-		add(generateFileMenu());
-		add(generateEditMenu());
-		add(generateHelpMenu());
+//		add(generateFileMenu());
+//		add(generateEditMenu());
 		add(generateCrawlerMenu());
+		add(generateHelpMenu());
+		
 		
 //		JSearchBar searchBar = new JSearchBar();
 //		add(searchBar);
@@ -187,10 +186,11 @@ public class CoreMenu extends JMenuBar{
 			System.out.print("\n\n");
 					
 			for(File directory : World.crawlerDirs){
-				if(!directory.isDirectory())
-					continue;
+				String imgDir = Util.relPath("/data/images");
+//				if(!directory.isDirectory())
+//					continue;
 				String scriptToRun = Util.relPath("/overarchingScript.pl");
-				String cmd = "perl " + scriptToRun + " \"" + directory.toString() + "\"";
+				String cmd = "perl " + scriptToRun + " \"" + directory.toString() + "\" \"" + imgDir + "\"";
 System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd + "\n");
 				try {
 					Runtime.getRuntime().exec(cmd);

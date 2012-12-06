@@ -16,9 +16,8 @@ public class ScheduleDialog extends JDialog{
 //	JButtonGroup howOftenGroup = new JRadioGroup();
 	
 	ScheduleDialog(){
-		
-		setTitle("Scheduler...");
-		setBounds(50, 50, 200, 200);
+		setTitle("Scheduler... (NOT WORKING YET)");
+		setBounds(50, 50, 600, 75);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLayout(new FlowLayout());
 		
@@ -26,13 +25,10 @@ public class ScheduleDialog extends JDialog{
 		JRadioButton daily = new JRadioButton("Daily");
 		JRadioButton weekly = new JRadioButton("Weekly");
 		JLabel everySoOften = new JLabel("Every: ");
-		JLabel atLabel = new JLabel("At: ");
+	//	JLabel atLabel = new JLabel("At: ");
 		JTextField input = new JTextField(10);
 		JButton okButton = new JButton("OK");
 		JButton cancelButton = new JButton("Cancel");
-		
-//		JRadioButton runOnce = new JRadioButton("Run Once");
-//		JRadioButton run
 		
 		ButtonGroup group = new ButtonGroup();
 		group.add(hourly);
@@ -47,14 +43,9 @@ public class ScheduleDialog extends JDialog{
 		
 		add(everySoOften);
 		add(input);
-		add(atLabel);
+//		add(atLabel);
 		add(okButton);
 		add(cancelButton);
-		
-//		add(group);
-		
-//		JButton b = new JButton("vox");
-//		add(b);
 	}
 
 }
