@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -57,20 +56,41 @@ public class MediaFile extends Component{
 	public int x = 0, y = 0, w = 0, h = 0;
 	public SpaceTimeListener spaceListener = new SpaceTimeListener(this);
 	
-	// This is the main constructor that everyone else calls
+	/**
+	 * Base constructor
+	 * @param file - The file that this mediafile links to
+	 * @param owner - medialibrary that owns the file
+	 */
 	public MediaFile(File file, MediaLibrary owner){
 		setFile(file);
 		this.owner = owner;
 	}
 	
+	/**
+	 * String constructor
+	 * @param filePath - fully qualified path to the file
+	 * @param owner - medialibrary that owns the file
+	 */
 	public MediaFile(String filePath, MediaLibrary owner){
 		this(new File(filePath), owner);
 	}
 	
+	/**
+	 * String with image constructor
+	 * @param filePath - path to the file
+	 * @param imgFilePath - path to the associated image
+	 * @param owner - medialibrary that owns the file
+	 */
 	public MediaFile(String filePath, String imgFilePath, MediaLibrary owner){
 		this(new File(filePath), new File(imgFilePath), owner);
 	}
 	
+	/**
+	 * File based image constructor
+	 * @param file - file to link to
+	 * @param imgFile - associated image
+	 * @param owner - medialibrary that owns the file
+	 */
 	public MediaFile(File file, File imgFile, MediaLibrary owner){
 		this(file, owner);
 		loadImg(imgFile);
