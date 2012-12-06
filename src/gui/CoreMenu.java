@@ -4,11 +4,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.tree.TreePath;
 
 import util.Util;
@@ -25,6 +27,10 @@ public class CoreMenu extends JMenuBar{
 	/** Generated via Eclipse */
 	private static final long serialVersionUID = -6260232465922104398L;
 	
+	JTextField searchbox = new JTextField(20);
+	JButton searchbutton = new JButton("Search");
+	JButton searchclearbutton = new JButton("Clear Search");
+	
 	/**
 	 * Default Constructor - Adds the appropriate Menus
 	 */
@@ -34,9 +40,46 @@ public class CoreMenu extends JMenuBar{
 		add(generateCrawlerMenu());
 		add(generateHelpMenu());
 		
-		
 //		JSearchBar searchBar = new JSearchBar();
 //		add(searchBar);
+		
+		searchbox.addActionListener(new SearchTextHandler());
+		searchbutton.addActionListener(new SearchButtonHandler());
+		searchclearbutton.addActionListener(new SearchClearButtonHandler());
+		add(searchbox);
+		add(searchbutton);
+		add(searchclearbutton);
+	}
+	
+	private class SearchTextHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (!searchbox.getText().isEmpty()) {
+				System.out.print("Got: "+searchbox.getText()+"\n");
+				Wall.showSearchLib = true;
+			} else {
+				Wall.showSearchLib = false;
+			}
+		}
+	}
+	
+	private class SearchButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (!searchbox.getText().isEmpty()) {
+				System.out.print("Got: "+searchbox.getText()+"\n");
+				Wall.showSearchLib = true;
+			} else {
+				Wall.showSearchLib = false;
+			}
+		}
+	}
+	
+	private class SearchClearButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (!searchbox.getText().isEmpty()) {
+				searchbox.setText("");
+				Wall.showSearchLib = false;
+			}
+		}
 	}
 	
 	/**
@@ -190,7 +233,7 @@ public class CoreMenu extends JMenuBar{
 //				if(!directory.isDirectory())
 //					continue;
 				String scriptToRun = Util.relPath("/overarchingScript.pl");
-				String cmd = "perl " + scriptToRun + " \"" + directory.toString() + "\" \"" + imgDir + "\"";
+				String cmd = "perl " + scriptToRun +  "\"" + imgDir + "\"  \"" + directory.toString() + "\"";
 System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd + "\n");
 				try {
 					Runtime.getRuntime().exec(cmd);
