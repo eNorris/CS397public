@@ -54,6 +54,9 @@ public class AudioFile extends MediaFile{
 	
 	public static AudioFile createFromDB(MediaLibrary parent, ResultSet dbResult){
 		
+		if(dbResult == null)
+			return null;
+		
 		String filepath = null;
 		String imgPath = null;
 		try {

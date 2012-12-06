@@ -36,8 +36,8 @@ public class CoreMenu extends JMenuBar{
 		add(generateHelpMenu());
 		add(generateCrawlerMenu());
 		
-		JSearchBar searchBar = new JSearchBar();
-		add(searchBar);
+//		JSearchBar searchBar = new JSearchBar();
+//		add(searchBar);
 	}
 	
 	/**
@@ -163,7 +163,6 @@ public class CoreMenu extends JMenuBar{
 			String helpText = "Media Manager Project Solution created for CS397 by:\n" + 
 					"Ben Campbell, Gerald Hold, Edward Norris, and Thomas Reese\n";
 			JOptionPane.showMessageDialog(new JFrame(), helpText, "About", JOptionPane.INFORMATION_MESSAGE);
-			
 		}
 	}
 	
@@ -185,16 +184,12 @@ public class CoreMenu extends JMenuBar{
 				World.crawlerDirs.add(new File(s.toString()));
 			}
 			
-//			for(File dir : World.crawlerDirs)
-//				System.out.print("Will crawl " + dir.toString() + "\n");
-			
 			System.out.print("\n\n");
 					
 			for(File directory : World.crawlerDirs){
-			// FIXME - Ask Thomas if the crawler will only take directories or if it will take indiv. files
 				if(!directory.isDirectory())
 					continue;
-				String scriptToRun = Util.relPath("/scripts/overarchingScript.pl");
+				String scriptToRun = Util.relPath("/overarchingScript.pl");
 				String cmd = "perl " + scriptToRun + " \"" + directory.toString() + "\"";
 System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd + "\n");
 				try {
@@ -203,9 +198,7 @@ System.out.print("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + c
 					System.out.print("Could not run command: " + cmd);
 					e1.printStackTrace();
 				}
-//				System.out.print("Action: " + e1.getActionCommand() + "\n");
 			}
-			
 		}
 	}
 	

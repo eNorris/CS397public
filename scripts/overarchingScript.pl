@@ -14,7 +14,7 @@ use JSON -support_by_pp;
 use strict;
 use LWP::Simple;
 use Data::Dumper;
-use IMDB::Film;
+#use IMDB::Film;
 use WebService::TVDB;
 
 my @videoTypes = ("avi","mp4","mkv","mov","wmv","flv");
