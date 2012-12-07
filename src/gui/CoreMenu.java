@@ -250,8 +250,8 @@ public class CoreMenu extends JMenuBar{
 					
 			for(File directory : World.crawlerDirs){
 				String imgDir = System.getProperty("user.dir")+"\\data";//Util.relPath("/data");
-//				if(!directory.isDirectory())
-//					continue;
+				if(!directory.isDirectory())
+					continue;
 //				String scriptToRun = Util.relPath("/overarchingScript.pl");
 				String scriptToRun = System.getProperty("user.dir")+"\\scripts\\overarchingScript.pl";
 
