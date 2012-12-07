@@ -40,13 +40,11 @@ public class CoreMenu extends JMenuBar{
 	 */
 	CoreMenu(Core owner){
 		this.owner = owner;
+		// These aren't really needed anymore
 //		add(generateFileMenu());
 //		add(generateEditMenu());
 		add(generateCrawlerMenu());
 		add(generateHelpMenu());
-		
-//		JSearchBar searchBar = new JSearchBar();
-//		add(searchBar);
 		
 		searchbox.addActionListener(new SearchTextHandler());
 		searchbutton.addActionListener(new SearchButtonHandler());
@@ -162,7 +160,7 @@ public class CoreMenu extends JMenuBar{
 		public MenuItemFileAdd() {super("Add");}
 
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			
 		}
 	}
@@ -173,7 +171,7 @@ public class CoreMenu extends JMenuBar{
 		public MenuItemFileRemove(){super("Remove");}
 
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			// TODO Auto-generated method stub
 		}
 	}
@@ -184,7 +182,7 @@ public class CoreMenu extends JMenuBar{
 		public MenuItemEditChange(){super("Change");}
 		
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -197,7 +195,7 @@ public class CoreMenu extends JMenuBar{
 			super("Modify");
 		}
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
@@ -211,7 +209,7 @@ public class CoreMenu extends JMenuBar{
 			super("About");
 		}
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			String helpText = "Media Manager Project Solution created for CS397 by:\n" + 
 					"Ben Campbell, Gerald Hold, Edward Norris, and Thomas Reese\n";
 			JOptionPane.showMessageDialog(new JFrame(), helpText, "About", JOptionPane.INFORMATION_MESSAGE);
@@ -224,7 +222,7 @@ public class CoreMenu extends JMenuBar{
 		public MenuItemCrawlerLaunch(){super("Launch");}
 		
 		@Override
-		public void doOnSelection() {
+		public void doOnSelection(ActionEvent e) {
 			TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
 			
 			World.crawlerDirs.clear();
@@ -250,8 +248,8 @@ public class CoreMenu extends JMenuBar{
 					
 			for(File directory : World.crawlerDirs){
 				String imgDir = System.getProperty("user.dir")+"\\data";//Util.relPath("/data");
-				if(!directory.isDirectory())
-					continue;
+//				if(!directory.isDirectory())
+//					continue;
 //				String scriptToRun = Util.relPath("/overarchingScript.pl");
 				String scriptToRun = System.getProperty("user.dir")+"\\scripts\\overarchingScript.pl";
 

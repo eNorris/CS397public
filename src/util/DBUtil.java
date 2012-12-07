@@ -271,8 +271,7 @@ public class DBUtil {
 			m_connected = true;
 			return true;
 		} catch (SQLException e) {
-			//e.printStackTrace();
-			//System.out.print("Error connecting to the database!\n");
+			if(World.SQLDEBUG) e.printStackTrace();
 		}
 		return false;
 	}
@@ -294,8 +293,10 @@ public class DBUtil {
 		try {
 			m_resultSet = m_statement.executeQuery(arg);
 		} catch (SQLException e) {
-			System.out.print("Error executing query \"" + arg + "\"!\n");
-			e.printStackTrace();
+			if(World.SQLDEBUG){
+				System.out.print("Error executing query \"" + arg + "\"!\n");
+				e.printStackTrace();
+			}
 			m_resultSet = null;
 		}
 		return m_resultSet;
@@ -311,6 +312,7 @@ public class DBUtil {
 			m_resultSet = m_statement.executeQuery(arg);
 			return true;
 		} catch (SQLException e) {
+			if(World.SQLDEBUG) e.printStackTrace();
 			m_resultSet = null;
 			return false;
 		}
@@ -326,7 +328,7 @@ public class DBUtil {
 			success = m_statement.execute(arg);
 			success = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if(World.SQLDEBUG) e.printStackTrace();
 			//System.out.print("Failure executing command: \"" + arg + "\"\n");
 			success = false;
 		}
@@ -334,8 +336,7 @@ public class DBUtil {
 	}
 
 	public boolean Disconnect() {
-		if(!m_connected)
-		{
+		if(!m_connected){
 			System.out.print("Cannot disconnect from disconnected database!\n");
 			return false;
 		}
@@ -346,7 +347,7 @@ public class DBUtil {
 			if(m_connection != null) m_connection.close();
 			m_connected = false;
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			if(World.SQLDEBUG) e.printStackTrace();
 			System.out.print("Could not close a component of DBUtil!\n");
 			return false;
 		}

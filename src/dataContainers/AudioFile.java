@@ -6,7 +6,6 @@ import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 import util.Util;
@@ -40,8 +39,6 @@ public class AudioFile extends MediaFile{
 
 		public AudioFilePopUp(AudioFile file){
 			super(file);
-//			add(new JLabel(" == TEST LABEL =="));
-//			add(m_soundStuff);
 			m_soundStuff.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -61,7 +58,7 @@ public class AudioFile extends MediaFile{
 		String imgPath = null;
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
-			imgPath = Util.relPath("/audio.png");
+			imgPath = Util.relPath("graphics/audio.png");
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
 			e.printStackTrace();

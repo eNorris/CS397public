@@ -20,6 +20,8 @@ public class World {
 	public static Core core = null;
 	public static DBUtil dbc = null;
 	
+	public static boolean SQLDEBUG = true;
+	
 	public void finalize(){
 		if(dbc != null)
 			dbc.Disconnect();

@@ -16,11 +16,11 @@ public abstract class MenuItemBase extends JMenuItem{
 				// allow only enter or left mouse click
 				if(e.getModifiers() == 0 || e.getModifiers() == 16){
 					System.out.print("Action: " + e.getActionCommand() + "\n");
-					doOnSelection();
+					doOnSelection(e);
 				}
 			}
 		});
 	}
 	
-	public abstract void doOnSelection();
+	public abstract void doOnSelection(ActionEvent e);
 }

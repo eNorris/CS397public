@@ -73,7 +73,7 @@ public class VideoFile extends MediaFile {
 		if(imgPath != null){
 			toReturn = new VideoFile(filepath, imgPath, parent);
 		}else{
-			toReturn = new VideoFile(filepath, Util.relPath("/graphics/video.png"), parent);
+			toReturn = new VideoFile(filepath, Util.relPath("graphics/video.png"), parent);
 		}
 		return toReturn;
 	}

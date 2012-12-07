@@ -91,9 +91,10 @@ public class Wall extends JPanel{
 			}
 
 			public void mouseMoved(MouseEvent ev) {
-				for(MediaFile f : currentLib){
-					f.spaceListener.update(ev.getX(), ev.getY());
-				}
+				// TODO - uncomment when InfoPopUp is done
+//				for(MediaFile f : currentLib){
+//					f.spaceListener.update(ev.getX(), ev.getY());
+//				}
 			}
 		});
 		
@@ -162,7 +163,7 @@ System.out.print("Should repaint now!");
 		
 		for(int i = 0; i < files.length; i++){
 			AudioFile a = new AudioFile(files[i], currentLib);
-			a.loadImg(Util.relPath("/pic1.bmp"));
+			a.loadImg(Util.relPath("graphics/pic1.bmp"));
 			currentLib.add(a);
 		}
 	}

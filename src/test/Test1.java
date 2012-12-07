@@ -20,7 +20,7 @@ public class Test1 {
 	
 	@Test
 	public void checkRelativeLocations(){
-		String path = Util.relPath("/audio.png");
+		String path = Util.relPath("graphics/audio.png");
 		// Check to set that we get a path
 		assertNotNull(path);
 		System.out.print("Path = " + path + "\n");
@@ -29,7 +29,7 @@ public class Test1 {
 	@Test
 	public void checkLoadGraphic(){
 		Image img = null;
-		img = Util.loadImgRes("/audio.bmp");
+		img = Util.loadImgRes("graphics/audio.bmp");
 	
 		// check for existance
 		assertNotNull(img);

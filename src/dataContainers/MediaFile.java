@@ -45,7 +45,9 @@ public class MediaFile extends Component{
 	public MediaLibrary owner = null;
 	
 	protected MediaFilePopUp m_popUp = new MediaFilePopUp(this);
-	protected InfoPopup m_infoPopup = new InfoPopup();
+	
+	// TODO - readd this when the infoPopup is working
+//	protected InfoPopup m_infoPopup = new InfoPopup();
 	
 	/**Name of the file without extension ("C:\temp\file.txt" => "file")*/
 	public String fileName = null;
@@ -54,7 +56,9 @@ public class MediaFile extends Component{
 	public String fileExt = null;
 	
 	public int x = 0, y = 0, w = 0, h = 0;
-	public SpaceTimeListener spaceListener = new SpaceTimeListener(this);
+	
+	// Uncomment this when InfoPopUp is working
+//	public SpaceTimeListener spaceListener = new SpaceTimeListener(this);
 	
 	/**
 	 * Base constructor
@@ -98,9 +102,6 @@ public class MediaFile extends Component{
 	
 	public void setThumbnail(Image thumbnail){
 		this.thumbnail = thumbnail;
-//		if(thumbnail != null){
-//			thumbnail.
-//		}
 	}
 	
 	public void setFile(File file){
@@ -111,10 +112,6 @@ public class MediaFile extends Component{
 		description = null;
 		fileName = null;
 		fileExt = null;
-	}
-	
-	public void fetchMetaData(){
-		// FIXME - Not needed - the script does this
 	}
 	
 	protected void resolveFileSize(){
@@ -200,10 +197,6 @@ public class MediaFile extends Component{
 		
 		protected MediaFilePopUp self = this;
 		protected MediaFile owner = null;
-		
-//		public MediaFilePopUp(MediaFile mediaFile){
-//			owner = mediaFile;
-//		}
 
 		private static final long serialVersionUID = -8357288887563917285L;
 		
@@ -246,14 +239,7 @@ public class MediaFile extends Component{
 			m_delete.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					try {
-//						if(self.owner.file != null)
-//							Desktop.getDesktop().(self.owner.file);
-//						else
-//							System.out.print("Could not open file.\n");
-//					} catch (IOException e1) {
-//						e1.printStackTrace();
-//					}
+					// Delete file
 					System.out.print("Action: " + e.getActionCommand() + "\n");
 				}
 			});
@@ -266,11 +252,13 @@ public class MediaFile extends Component{
 		m_popUp.show(caller, x, y);
 	}
 	
+/*
 	public void popUpInfo(Component caller, int x, int y){
 		m_infoPopup.setEnabled(true);
 		m_infoPopup.setVisible(true);
 		m_infoPopup.show(caller, x, y);
 	}
+*/
 	
 	//Author: Mkyong
 	//http://www.mkyong.com/java/how-to-resize-an-image-in-java/
@@ -302,7 +290,9 @@ public class MediaFile extends Component{
 	public void draw(Graphics g){
 		g.drawImage(thumbnail, x + owner.space.ix, y + World.space.iy, null);
 	}
-	
+
+// Note: When you 
+/*
 	public class InfoPopup extends JPopupMenu{
 
 		private static final long serialVersionUID = -3564833458604078898L;
@@ -316,7 +306,8 @@ public class MediaFile extends Component{
 			
 			add(new JMenuItem("MediaFile::InfoPopup::cat"));
 			add(new JMenuItem("dog"));
-			add(new InfoPanel());
+			// Add this back in when we have the InfoPopup working
+//			add(new InfoPanel());
 		}
 		
 		public void setVisible(boolean vis){
@@ -345,6 +336,11 @@ public class MediaFile extends Component{
 			super.paint(g);
 		}
 		
+		/ **
+		 * This is the popup menu that should show up when you hover over a mediafile in the Wall
+		 * @author Edward
+		 *
+		 * /
 		public class InfoPanel extends JPanel{
 			private static final long serialVersionUID = 359115013335470480L;
 			
@@ -391,4 +387,5 @@ public class MediaFile extends Component{
 			}
 		}
 	}
+*/
 }
