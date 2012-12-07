@@ -83,9 +83,15 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 				// A => Audio, I => Image, M => Movie, T => TV, O => Other
 				if(filetype.equals("A")){
 					add(AudioFile.createFromDB(this, results));
-				}//else if(filetype.equals("I")){
-				//	add(GraphicFile.createFromDB(this, results));
-				//}
+				}else if(filetype.equals("I")){
+					add(GraphicFile.createFromDB(this, results));
+				}else if(filetype.equals("M")){
+					add(VideoFile.createMovieFromDB(this, results));
+				}else if(filetype.equals("T")){
+					add(VideoFile.createTVFromDB(this, results));
+				}else{
+					add(MediaFile.createFromDB(this, results));
+				}
 			}
 			if(!success){
 				System.out.print("No files found!\n");

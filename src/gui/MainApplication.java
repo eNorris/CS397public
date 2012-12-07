@@ -14,12 +14,25 @@ import util.World;
  * Remove unneeded flies in the searchEngine package since it isn't used anymore
  * 
  * 
- * NOTES:
+ * === NOTES: ===
  * 
  * I commented out a bunch of code that will still be in development for a while
+ * 
  * The user can select single files or directories again for the crawler
+ * 
  * Whenever you call Util.relPath(str), make sure str does NOT start with a / ("data/file.txt" instead of "/data/file.txt")
+ * 
  * Added a global value called World.SQLDEBUG to turn SQL stack trace output on and off
+ * 
+ * Most of the meaningful database queries are either in MediaLibrary::constructFromDB() which makes the first
+ *   query and calls the corresponding MediaFile creator. Each MediaFile type has a corresponding createFromDB()
+ *   function
+ * 
+ * Make sure the perl script finds "scripts/sqllock" and deletes it when it's done
+ * 
+ * Also, as a side note, Wall is now a pseudo-singleton object. This means that anytime, anywhere you can call
+ *   Wall.singleton to get the last Wall object created. Someday, maybe I'll make it a fully singleton object
+ *   so only one Wall can ever exist at any time (which would make sense).
  * 
  * @author Edward Norris
  *

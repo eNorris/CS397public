@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -187,6 +189,28 @@ public class MediaFile extends Component{
 				x <= this.x + owner.space.ix + w && 		// right bound
 				y >= this.y + World.space.iy && 			// top bound
 				y <= this.y + World.space.iy + this.h);		// bottom bound
+	}
+	
+	public static MediaFile createFromDB(MediaLibrary parent, ResultSet dbResult){
+		
+		String filepath = null;
+		try {
+			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(filepath != null)
+			return new MediaFile(filepath, Util.relPath("graphics/mediafile.png"), parent);
+		return new MediaFile("Unknown", Util.relPath("grpahics/mediafile.png"), parent);
+		
+//		if(imgPath != null){
+//			toReturn = new VideoFile(filepath, imgPath, parent);
+//		}else{
+//			toReturn = new VideoFile(filepath, Util.relPath("graphics/video.png"), parent);
+//		}
+//		return toReturn;
 	}
 	
 	public class MediaFilePopUp extends JPopupMenu{

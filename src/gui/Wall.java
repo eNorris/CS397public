@@ -32,7 +32,10 @@ public class Wall extends JPanel{
 	
 	public Core owner = null;
 	
+	public static Wall singleton = null;
+	
 	Wall(Core owner){
+		singleton = this;
 		this.owner = owner;
 		setOpaque(false);
 		

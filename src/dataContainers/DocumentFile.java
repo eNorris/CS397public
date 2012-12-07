@@ -1,14 +1,19 @@
 package dataContainers;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JMenuItem;
 
+import util.Util;
+
 public class DocumentFile extends MediaFile {
 
 	private static final long serialVersionUID = -432259262007877412L;
+	
+	private static Image defaultImg= Util.loadImgRes("graphics/document.png");
 
 	public DocumentFile(File file, MediaLibrary owner) {
 		super(file, owner);
@@ -26,6 +31,8 @@ public class DocumentFile extends MediaFile {
 	public DocumentFile(File file, File imgFile, MediaLibrary owner){
 		this(file, owner);
 		loadImg(imgFile);
+		if(thumbnail == null || thumbnail.getWidth(null) == -1)
+			thumbnail = defaultImg;
 	}
 
 	public class DocumentFilePopUp extends MediaFilePopUp{
