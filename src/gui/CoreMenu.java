@@ -222,7 +222,7 @@ public class CoreMenu extends JMenuBar{
 		public MenuItemCrawlerLaunch(){super("Launch");}
 		
 		@Override
-		public void doOnSelection(ActionEvent e) {
+		public void doOnSelection(ActionEvent ev) {
 			TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
 			
 			World.crawlerDirs.clear();
@@ -238,7 +238,6 @@ public class CoreMenu extends JMenuBar{
 			
 			File locker = new File(System.getProperty("user.dir")+"\\scripts\\sqllock");
 			try {
-
 				if(!locker.createNewFile())
 					System.out.print("Could not create file: " + locker.getAbsolutePath() + "\n");
 			} catch (IOException e) {
