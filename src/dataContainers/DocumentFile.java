@@ -1,13 +1,12 @@
 package dataContainers;
 
-import java.awt.Image;
+import util.Util;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
-import javax.swing.JMenuItem;
-
-import util.Util;
 
 public class DocumentFile extends MediaFile {
 

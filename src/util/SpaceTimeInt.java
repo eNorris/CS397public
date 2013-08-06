@@ -166,7 +166,7 @@ public class SpaceTimeInt {
 		if(dt != 0){
 			vx = dx / (float)dt;
 			vy = dy / (float)dt;
-		}else{
+		} else {
 			System.out.print("WARNING: SpaceTimeInt::spacialUpdate(): Divide by zero!\n\n");
 			vx = vy = Float.POSITIVE_INFINITY;
 		}

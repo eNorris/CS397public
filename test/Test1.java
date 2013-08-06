@@ -1,18 +1,20 @@
-import static org.junit.Assert.*;
+import dataContainers.AudioFile;
+import dataContainers.MediaFile;
+import dataContainers.MediaLibrary;
+import org.junit.Test;
+import util.DBUtil;
+import util.Util;
+import util.World;
 
 import java.awt.Image;
 import java.io.File;
 import java.sql.ResultSet;
 
-import org.junit.Test;
-
-import dataContainers.AudioFile;
-import dataContainers.MediaFile;
-import dataContainers.MediaLibrary;
-
-import util.DBUtil;
-import util.Util;
-import util.World;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class Test1 {
 	
@@ -26,14 +28,14 @@ public class Test1 {
 	
 	@Test
 	public void checkLoadGraphic(){
-		Image img = null;
-		img = Util.loadImgRes("graphics/audio.bmp");
+		Image image = null;
+		image = Util.loadImgRes("graphics/audio.bmp");
 	
-		// check for existance
-		assertNotNull(img);
+		// Check image exists
+		assertNotNull(image);
 		
 		// check for legality
-		assertFalse(img.getWidth(null) == -1);
+		assertFalse(image.getWidth(null) == -1);
 	}
 	
 	@Test
@@ -91,10 +93,4 @@ public class Test1 {
 		
 		assertTrue(testLib.size() == 1);
 	}
-	
-	@Test
-	public void checkFileTypes(){
-		
-	}
-
 }

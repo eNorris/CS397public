@@ -1,19 +1,16 @@
 package gui;
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.io.File;
-
-import javax.swing.JPanel;
-
+import dataContainers.AudioFile;
+import dataContainers.MediaLibrary;
 import util.SpringEq;
 import util.Util;
 import util.World;
 
-import dataContainers.AudioFile;
-import dataContainers.MediaFile;
-import dataContainers.MediaLibrary;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.io.File;
 
 public class Wall extends JPanel{
 
@@ -21,7 +18,6 @@ public class Wall extends JPanel{
 	public MediaLibrary currentLib = new MediaLibrary(this);
 	public MediaLibrary searchLib = new MediaLibrary(this);
 	
-//	public static boolean showSearchLib = false;
 	public static String showSearchLib = "";
 	
 	private boolean m_moving = false;
@@ -55,9 +51,7 @@ public class Wall extends JPanel{
 				
 //				currentLib.get(0).popUpInfo(self, ev.getX(), ev.getY());
 //				currentLib.get(0).popUp(self, ev.getX(), ev.getY());
-				
 //				infoPopup.activate(ev.getX(), ev.getY());
-				
 				if(ev.getButton() == MouseEvent.BUTTON1){
 					// left click => consume
 					m_moving = true;
@@ -161,10 +155,11 @@ System.out.print("Should repaint now!");
 		File directoryFile = new File(directory);
 		File[] files = directoryFile.listFiles();
 		
-		for(int i = 0; i < files.length; i++)
+		for(int i = 0; i < files.length; i++) {
 			System.out.print("Got " + files[i] + "\n");
+        }
 		
-		for(int i = 0; i < files.length; i++){
+		for(int i = 0; i < files.length; i++) {
 			AudioFile a = new AudioFile(files[i], currentLib);
 			a.loadImg(Util.relPath("graphics/pic1.bmp"));
 			currentLib.add(a);

@@ -204,15 +204,28 @@ public class DBUtil {
 	private static ResultSet m_resultSet = null;
 	private static Statement m_statement = null;
 
-	public static final String DBName = "MediaData";
-	public static final String DBPath = "data\\";
-	public static final String DBArg = "jdbc:h2:" + DBPath + DBName + ";";
-	public static final String DBUsername = "sa";
-	public static final String DBPassword = "";
+    private String DBName = "MediaData";
+    private String DBPath = "data\\";
+    private String DBArg = "jdbc:h2:" + DBPath + DBName + ";";
+    private String DBUsername = "sa";
+	private String DBPassword = "";
 
 	public static final String CreateTablesSql = System.getProperty("user.dir")+"\\CreateTables.sql";
 
-	public DBUtil() {
+    // Only exists for testing until Spring is implemented
+    public DBUtil() {
+
+    }
+
+    public DBUtil(String dbName, String dbPath, String dbArg, String dbUsername, String dbPassword) {
+        this.DBName = dbName;
+        this.DBPath = dbPath;
+        this.DBArg  = dbArg + dbPath + dbName + ";";
+        this.DBUsername = dbUsername;
+        this.DBPassword = dbPassword;
+    }
+
+	public void connect() {
 		if(Locked()) {
 			System.out.print("Database is Locked!\n");
 			return;
@@ -232,7 +245,7 @@ public class DBUtil {
 				}
 			}
 		} else {
-			//file doesn't exist or cannot be accessed
+			//File doesn't exist or cannot be accessed
 			if(!Connect(true)) {
 				if(!ResetTables()) {
 					System.out.print("Failed to initialize the database!\n");
@@ -325,12 +338,10 @@ public class DBUtil {
 		}
 		boolean success = false;
 		try {
-			success = m_statement.execute(arg);
-			success = true;
+			m_statement.execute(arg);
+			return true;
 		} catch (SQLException e) {
 			if(World.SQLDEBUG) e.printStackTrace();
-			//System.out.print("Failure executing command: \"" + arg + "\"\n");
-			success = false;
 		}
 		return success;
 	}

@@ -1,36 +1,31 @@
 package gui;
 
-import java.io.File;
-
 import util.Util;
 import util.World;
 
+import java.io.File;
+
 public class ExecSQL implements Runnable{
-	public void run(){
-		File lockfile = new File(Util.relPath("/scripts/sqllock"));
-System.out.print("@ExecSQL::run(): created new lockfile\n");
-		
-		while(lockfile.exists()){
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-System.out.print("@ExecSQL::run(): the lockfile was removed: proceeding to parse 'sql.sql'\n");
-		
-		File sqlExecFile = new File(Util.relPath("scripts/sql.sql"));
-		if(!sqlExecFile.exists()){
-System.out.print("@ExecSQL::run(): could not execute: " + Util.relPath("scripts/sql.sql") + "\n");
-			return;
-		}
-		
-		if(!World.dbc.ExecuteFile(sqlExecFile.getAbsolutePath())){
-			System.out.print("Failed to execute sql file: " + sqlExecFile.getAbsolutePath() + "\n");
-		}
-		
-System.out.print("@ExecSQL::run(): executing final task before death - updating wall from database");
-		Wall.singleton.currentLib.constructFromDB();
-		Wall.singleton.repaint();
-	}
+    public void run(){
+        System.out.println("Waiting for launch SQL to be generated");
+        File sqlFile = new File(Util.relPath("/sql.sql"));
+        while(!sqlFile.exists()){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("The launch SQL has been generated; proceeding to parse [" + sqlFile.getName() + "]");
+
+        if(World.dbc.ExecuteFile(sqlFile.getAbsolutePath())) {
+            sqlFile.delete();
+        } else {
+            System.out.println("Failed to execute sql file: " + sqlFile.getAbsolutePath());
+        }
+
+        System.out.println("@ExecSQL::run(): executing final task before death - updating wall from database");
+        Wall.singleton.currentLib.constructFromDB();
+        Wall.singleton.repaint();
+    }
 }

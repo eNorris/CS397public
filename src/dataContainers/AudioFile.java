@@ -1,15 +1,14 @@
 package dataContainers;
 
-import java.awt.Image;
+import util.Util;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.swing.JMenuItem;
-
-import util.Util;
 
 public class AudioFile extends MediaFile{
 
@@ -63,6 +62,7 @@ public class AudioFile extends MediaFile{
 		String imgPath = null;
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+            System.out.print(filepath);
 			imgPath = Util.relPath("graphics/audio.png");
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");

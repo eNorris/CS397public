@@ -1,13 +1,12 @@
 package dataContainers;
 
-import java.awt.Component;
-import java.awt.Graphics;
+import util.SpaceTimeInt;
+import util.World;
+
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import util.SpaceTimeInt;
-import util.World;
 
 public class MediaLibrary extends ArrayList<MediaFile>{
 
@@ -76,6 +75,7 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 		ResultSet results = World.dbc.Query("SELECT * FROM File");
 		boolean success = false;
 		try {
+            clear();
 			while(results != null && results.next()){
 				success = true;
 				String filetype = results.getString("Type");

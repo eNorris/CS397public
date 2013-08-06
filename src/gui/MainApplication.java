@@ -1,10 +1,9 @@
 package gui;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import util.DBUtil;
 import util.World;
+
+import javax.swing.*;
 
 /**
  * TODO List:
@@ -42,12 +41,14 @@ import util.World;
 public class MainApplication extends JFrame{
 	
 	private static final long serialVersionUID = 4648172894076113183L;
-
+    public static void sout(String out) {
+        System.out.println(out);
+    }
 	MainApplication(){}
 	
 	public static void main(String[] args){
-		System.out.print("Debug Console...\n");
-		System.out.print("Running in: " + System.getProperty("user.dir") + "\n");
+        sout("Debug Console...");
+        sout("Running in directory [" + System.getProperty("user.dir") + "]");
 
 		World.dbc = new DBUtil();
 		if(World.dbc != null && !World.dbc.Connected()){
@@ -60,7 +61,7 @@ public class MainApplication extends JFrame{
 				return;
 			}
 		}
-		System.out.print("Connected to database: " + DBUtil.DBPath + DBUtil.DBName + "\n\n");
+		sout("Connected to database: " + DBUtil.DBPath + DBUtil.DBName + "\n\n");
 
 		JFrame frame = new JFrame();
 		

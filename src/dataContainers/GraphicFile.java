@@ -1,21 +1,20 @@
 package dataContainers;
 
-import java.awt.Image;
+import util.Util;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JMenuItem;
-
-import util.Util;
-
 public class GraphicFile extends MediaFile{
 
 	private static final long serialVersionUID = -7780276326943050864L;
 	
-	private static Image defaultImg = Util.loadImgRes("graphics/graphic.png");
+	private static Image defaultImg = Util.loadImgRes("/graphics/graphic.png");
 
 	public GraphicFile(File file, MediaLibrary owner) {
 		super(file, owner);
@@ -63,11 +62,13 @@ public class GraphicFile extends MediaFile{
 		String filepath = null;
 		try {
 			// The filepath is itself the path to the image since the file is the image
-			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
+			filepath = dbResult.getString("Path");
+//			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
 		} catch (SQLException e) {
 			System.out.print("DB ERROR: Path = '" + filepath + "' could not be resolved\n");
 			e.printStackTrace();
 		}
+        System.out.println("createFromDB filename [" + filepath + "]");
 		GraphicFile toReturn = new GraphicFile(filepath, filepath, parent);
 		return toReturn;
 	}
