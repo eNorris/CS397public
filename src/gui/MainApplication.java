@@ -7,7 +7,7 @@ import javax.swing.*;
 
 /**
  * TODO List:
- * Finish the sceduler
+ * Finish the scheduler
  * Create notification when the DB is updated and update currentLib in a non-ugly way
  * Make a real name for our application
  * Remove unneeded flies in the searchEngine package since it isn't used anymore
@@ -32,17 +32,19 @@ import javax.swing.*;
  * Also, as a side note, Wall is now a pseudo-singleton object. This means that anytime, anywhere you can call
  *   Wall.singleton to get the last Wall object created. Someday, maybe I'll make it a fully singleton object
  *   so only one Wall can ever exist at any time (which would make sense).
- * 
- * @author Edward Norris
- *
  */
 
 
 public class MainApplication extends JFrame{
 	
 	private static final long serialVersionUID = 4648172894076113183L;
+    private static String username = "TestUser";
+
     public static void sout(String out) {
         System.out.println(out);
+    }
+    public static String getUsername() {
+        return username;
     }
 	MainApplication(){}
 	
@@ -51,17 +53,17 @@ public class MainApplication extends JFrame{
         sout("Running in directory [" + System.getProperty("user.dir") + "]");
 
 		World.dbc = new DBUtil();
-		if(World.dbc != null && !World.dbc.Connected()){
-			if(!World.dbc.Connect()){
+		if(World.dbc != null && !World.dbc.isEstablished()){
+			if(!World.dbc.tryToConnect(false)){
 				JFrame frame = new JFrame();
 				JOptionPane.showMessageDialog(frame,
-						"Could not connect to database: " + DBUtil.DBPath + DBUtil.DBName + "\nIs the application already running?",
+						"Could not connect to database: " + World.dbc.getDBPath() + "\nIs the application already running?",
 						"Database Connection Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 		}
-		sout("Connected to database: " + DBUtil.DBPath + DBUtil.DBName + "\n\n");
+		sout("Connected to database: " + World.dbc.getDBPath() + "\n\n");
 
 		JFrame frame = new JFrame();
 		
@@ -78,6 +80,6 @@ public class MainApplication extends JFrame{
 	
 	public void finalize(){
 		if(World.dbc != null)
-			World.dbc.Disconnect();
+			World.dbc.disconnect();
 	}
 }

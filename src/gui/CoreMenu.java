@@ -1,4 +1,6 @@
 package gui;
+import util.MiscSQL;
+import util.SQLBuilder;
 import util.World;
 
 import javax.swing.*;
@@ -10,15 +12,13 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static gui.MainApplication.sout;
+
 /**
- * Menu system at the top of the Application/Applet
- *
- * @author Edward
- *
+ * Menu system at the top of the Application/Applet.
  */
 public class CoreMenu extends JMenuBar{
 
-    /** Generated via Eclipse */
     private static final long serialVersionUID = -6260232465922104398L;
 
     JTextField searchbox = new JTextField(20);
@@ -32,9 +32,6 @@ public class CoreMenu extends JMenuBar{
      */
     CoreMenu(Core owner){
         this.owner = owner;
-        // These aren't really needed anymore
-//		add(generateFileMenu());
-//		add(generateEditMenu());
         add(generateCrawlerMenu());
         add(generateHelpMenu());
 
@@ -83,8 +80,8 @@ public class CoreMenu extends JMenuBar{
     }
 
     /**
-     * Creates a Menu headed by "File" and populates it
-     * @return The Menu created
+     * Creates a JMenu headed by "File" and populates it.
+     * @return The created JMenu
      */
     public JMenu generateFileMenu(){
         JMenu toReturn = new JMenu("File");
@@ -157,7 +154,9 @@ public class CoreMenu extends JMenuBar{
         }
     }
 
-    /** Creates and returns a JMenuItem for File->Remove */
+    /**
+     * Creates and returns a JMenuItem for File->Remove
+     * */
     private class MenuItemFileRemove extends MenuItemBase{
         private static final long serialVersionUID = 9216262717029878271L;
         public MenuItemFileRemove(){super("Remove");}
@@ -168,7 +167,9 @@ public class CoreMenu extends JMenuBar{
         }
     }
 
-    /** Creates and returns a JMenuItem for Edit->Change */
+    /**
+     * Creates and returns a JMenuItem for Edit->Change
+     **/
     private class MenuItemEditChange extends MenuItemBase{
         private static final long serialVersionUID = -5554978003547610060L;
         public MenuItemEditChange(){super("Change");}
@@ -194,7 +195,9 @@ public class CoreMenu extends JMenuBar{
 
     }
 
-    /** Creates and returns a JMenuItem for Help->About */
+    /**
+     * Creates and returns a JMenuItem for Help->About
+     **/
     private class MenuItemHelpAbout extends MenuItemBase{
         private static final long serialVersionUID = 70274194970378772L;
         public MenuItemHelpAbout(){
@@ -226,33 +229,21 @@ public class CoreMenu extends JMenuBar{
                 World.crawlerDirs.add(new File(s.toString()));
             }
 
-            System.out.print("\n");
-
-            File locker = new File(System.getProperty("user.dir")+"\\scripts\\sqllock");
-//            File sqlCode = new File(System.getProperty("user.dir")+"\\scripts\\sql.sql");
-//            try {
-//                if(!locker.createNewFile()) {
-//                    System.out.println("Could not create file: " + locker.getAbsolutePath() + "\n");
             for(File directory : World.crawlerDirs){
-                String imgDir = System.getProperty("user.dir")+"\\data";
-
                 String scriptToRun = System.getProperty("user.dir")+"\\scripts\\overarchingScript.pl";
+                String cmd = "perl \"" + scriptToRun +  "\" \"" + directory.toString() + "\"";
+                sout("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd);
 
-                String cmd = "perl \"" + scriptToRun +  "\" \"" + imgDir + "\"  \"" + directory.toString() + "\"";
-                System.out.println("@CoreMenu::MenuItemCrawlerLaunch::doOnSelection(): cmd = " + cmd);
                 try {
                     Runtime.getRuntime().exec(cmd);
                 } catch (IOException e1) {
-                    System.out.println("Could not run command: " + cmd);
+                    sout("Could not run command: " + cmd);
                     e1.printStackTrace();
                 }
             }
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                System.out.println("Could not create file: " + locker.getAbsolutePath() + "\n");
-//            }
-
+            World.dbc.query(
+                    SQLBuilder.modifyPaths(
+                            MiscSQL.optimizePathModifications(World.crawlerDirs)));
 
             Executor exe =Executors.newCachedThreadPool();
             exe.execute(new ExecSQL());

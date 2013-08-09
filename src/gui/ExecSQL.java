@@ -1,13 +1,15 @@
 package gui;
-
+// This file is verified
 import util.Util;
 import util.World;
 
 import java.io.File;
 
+import static gui.MainApplication.sout;
+
 public class ExecSQL implements Runnable{
     public void run(){
-        System.out.println("Waiting for launch SQL to be generated");
+        sout("Waiting for launch SQL to be generated");
         File sqlFile = new File(Util.relPath("/sql.sql"));
         while(!sqlFile.exists()){
             try {
@@ -16,12 +18,12 @@ public class ExecSQL implements Runnable{
                 e.printStackTrace();
             }
         }
-        System.out.println("The launch SQL has been generated; proceeding to parse [" + sqlFile.getName() + "]");
+        sout("The launch SQL has been generated; proceeding to parse [" + sqlFile.getName() + "]");
 
-        if(World.dbc.ExecuteFile(sqlFile.getAbsolutePath())) {
+        if(World.dbc.executeFile(sqlFile)) {
             sqlFile.delete();
         } else {
-            System.out.println("Failed to execute sql file: " + sqlFile.getAbsolutePath());
+            sout("Failed to execute sql file: " + sqlFile.getAbsolutePath());
         }
 
         System.out.println("@ExecSQL::run(): executing final task before death - updating wall from database");

@@ -72,7 +72,7 @@ public class MediaLibrary extends ArrayList<MediaFile>{
 	}
 	
 	public void constructFromDB(){
-		ResultSet results = World.dbc.Query("SELECT * FROM File");
+		ResultSet results = World.dbc.query("SELECT * FROM File");
 		boolean success = false;
 		try {
             clear();

@@ -37,8 +37,8 @@ public class Wall extends JPanel{
 		
 		final JPanel m_self = this;
 		
-		//World.dbc.ResetTables();
-		//World.dbc.Execute("INSERT INTO File VALUES('C:\\code\\CS397_2\\CS397private\\library\\', 'test.mp3', 'A', '45', 'exe', 'exe')");
+		//World.dbc.resetTables();
+		//World.dbc.execute("INSERT INTO File VALUES('C:\\code\\CS397_2\\CS397private\\library\\', 'test.mp3', 'A', '45', 'exe', 'exe')");
 		
 		currentLib.constructFromDB();
 		

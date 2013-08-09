@@ -1,14 +1,13 @@
 package dataContainers;
 
-import java.awt.Image;
+import util.Util;
+import util.World;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.swing.JMenuItem;
-
-import util.Util;
-import util.World;
 
 public class VideoFile extends MediaFile {
 
@@ -61,11 +60,11 @@ public class VideoFile extends MediaFile {
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
 			
-			ResultSet r = World.dbc.Query("SELECT * FROM Movie WHERE Path=" + filepath);
-			if(r == null){
+			ResultSet result = World.dbc.query("SELECT * FROM Movie WHERE Path=" + filepath);
+			if(result == null){
 				System.out.print("ERROR: Could not find Movie matching key Path=" + filepath);
 			}else{
-				imgPath = r.getString("RTID");
+				imgPath = result.getString("RTID");
 			}
 			if(imgPath != null)
 				imgPath = imgPath + "thumb.jpg";
@@ -91,7 +90,7 @@ public class VideoFile extends MediaFile {
 		try {
 			filepath = dbResult.getString("Path") + dbResult.getString("Filename");
 			
-			ResultSet r = World.dbc.Query("SELECT * FROM Movie WHERE Path=" + filepath);
+			ResultSet r = World.dbc.query("SELECT * FROM Movie WHERE Path=" + filepath);
 			if(r == null){
 				System.out.print("ERROR: Could not find Movie matching key Path=" + filepath);
 			}else{

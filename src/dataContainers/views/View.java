@@ -13,12 +13,36 @@ public class View {
 
     public View(final MediaFile file) {
         this.file = file;
-        this.name = file.getName();
     }
 
-    public View(final String name, final String fullPath) {
-        this.name = name;
+    public View(final String fullPath) {
         this.fullPath = fullPath;
+    }
+
+    public String getName() {
+        return file.getName();
+    }
+
+    // Todo: Rename file here
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public MediaFile getFile() {
+        return file;
+    }
+
+    // Todo: Update file in system
+//    public void setFile(MediaFile file) {
+//        this.file = file;
+//    }
+
+    public boolean isDirectory() {
+        return directory;
     }
 
     public boolean addView(View view) {

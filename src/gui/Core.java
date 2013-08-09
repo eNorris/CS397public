@@ -1,22 +1,17 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Graphics;
+import util.World;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-
-import util.World;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
 
 /**
  * The main panel that fills the Application version of the program
- * 
- * @author Edward
- *
  */
-public class Core extends JPanel{
+public class Core extends JPanel {
 
-	/** Generated via Eclipse */
 	private static final long serialVersionUID = -5499945898085501882L;
 	
 	public Wall wall = new Wall(this);
@@ -24,7 +19,6 @@ public class Core extends JPanel{
 
 	/**
 	 * Default Constructor <br><br>
-	 * 
 	 * Sets the layout to BorderLayout, fills WEST with a FileTree and CENTER with a Wall
 	 */
 	public Core(){
@@ -42,14 +36,11 @@ public class Core extends JPanel{
 		
 		//add(new FileTree(), BorderLayout.WEST);
 		//add(new Wall(), BorderLayout.CENTER);
-		
-		
 	}
 	
 	/**
-	 * Paints the components
-	 * 
-	 * @param g The Graphics object that will draw the screen
+	 * Paints the components.
+	 * @param g The Graphics object that will draw the screen.
 	 */
 	public void paint(Graphics g){
 		super.paint(g);

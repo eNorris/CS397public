@@ -2,12 +2,11 @@ package util;
 
 import gui.Core;
 import gui.ScheduleFrame;
+import santhoshTree.CheckTreeManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-
-import santhoshTree.CheckTreeManager;
 
 public class World {
 	public static Config config = new Config();
@@ -24,6 +23,6 @@ public class World {
 	
 	public void finalize(){
 		if(dbc != null)
-			dbc.Disconnect();
+			dbc.disconnect();
 	}
 }

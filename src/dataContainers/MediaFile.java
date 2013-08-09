@@ -344,8 +344,6 @@ public class MediaFile extends Component{
 		
 		/ **
 		 * This is the popup menu that should show up when you hover over a mediafile in the Wall
-		 * @author Edward
-		 *
 		 * /
 		public class InfoPanel extends JPanel{
 			private static final long serialVersionUID = 359115013335470480L;
