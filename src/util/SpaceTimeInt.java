@@ -220,27 +220,3 @@ public class SpaceTimeInt {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

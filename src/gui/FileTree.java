@@ -1,26 +1,20 @@
 package gui;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
+import santhoshTree.CheckTreeManager;
+import santhoshTree.InstantiateTree;
+import util.Util;
+import util.World;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
-import santhoshTree.CheckTreeManager;
-import util.Util;
-import util.World;
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class FileTree extends JPanel{
 
@@ -29,18 +23,21 @@ public class FileTree extends JPanel{
 	private JTree fileTree;
 	private FileSystemModel fileSystemModel;
 	private JTextArea fileDetailsTextArea = new JTextArea("");
-	
-	FileTree(){
+    private static final String ROOT_DIRECTORY = "C:\\";
+
+    public FileTree() {
 //		setBackground(Color.RED);
 //		setPreferredSize(new Dimension(250, 100));
-		
-		setLayout(new BorderLayout());
-		
-		String directory = "C:\\";
-		
+
+        setLayout(new BorderLayout());
+
 		fileDetailsTextArea.setEditable(false);
 		fileDetailsTextArea.setPreferredSize(new Dimension(0, 50));
-		fileSystemModel = new FileSystemModel(new File(directory));
+		fileSystemModel = new FileSystemModel(new File(ROOT_DIRECTORY));
+        if (World.dbc.isEstablished()) {
+            // TODO : Finish filling tree from database
+            InstantiateTree.checkTreeFromDatabase();
+        }
 		fileTree = new JTree(fileSystemModel);
 		
 		World.treeManager = new CheckTreeManager(fileTree);
@@ -58,11 +55,11 @@ public class FileTree extends JPanel{
 		add(splitPane);
 	}
 
-	public void paint(Graphics g){
+    public void paint(Graphics g){
 		Util.drawGradientBackground(this, g);
 		super.paint(g);
 	}
-	
+
 	private String getFileDetails(File file) {
 		if (file == null)
 			return "";
@@ -74,7 +71,7 @@ public class FileTree extends JPanel{
 		if(fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Path: " + file.getPath() + "\n") > xpref)
 			xpref = fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Path: " + file.getPath() + "\n");
 		ypref++;
-		
+
 		buffer.append("Size: " + file.length() + "\n");
 		if(fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Size: " + file.length() + "\n") > xpref)
 			xpref = fileDetailsTextArea.getFontMetrics(fileDetailsTextArea.getFont()).stringWidth("Size: " + file.length() + "\n");
@@ -174,10 +171,3 @@ class FileSystemModel implements TreeModel {
 		}
 	}
 }
-
-
-
-
-
-
-

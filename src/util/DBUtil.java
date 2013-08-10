@@ -128,11 +128,15 @@ public class DBUtil {
             sout("Cannot query on a disconnected database!");
             return null;
         }
+        if (arg.isEmpty() || arg == null) {
+            sout("Cannot execute an empty SQL query!");
+            return null;
+        }
         try {
             resultSet = statement.executeQuery(arg);
         } catch (SQLException e) {
             if(World.SQLDEBUG){
-                sout("Error executing query \"" + arg + "\"!");
+                sout("Error executing query [" + arg + "]!");
                 e.printStackTrace();
             }
             resultSet = null;
@@ -148,6 +152,10 @@ public class DBUtil {
     public boolean queryTest(String arg) {
         if(!isEstablished()) {
             sout("Cannot query on a disconnected database!");
+            return false;
+        }
+        if (arg.isEmpty() || arg == null) {
+            sout("Cannot execute an empty SQL query!");
             return false;
         }
         try {
@@ -170,8 +178,13 @@ public class DBUtil {
             sout("Cannot execute on a disconnected database!");
             return false;
         }
+        if (arg.isEmpty() || arg == null) {
+            sout("Cannot execute an empty SQL query!");
+            return false;
+        }
         boolean success = false;
         try {
+            sout(arg);
             statement.execute(arg);
             return true;
         } catch (SQLException e) {

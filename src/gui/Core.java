@@ -20,6 +20,7 @@ public class Core extends JPanel {
 	/**
 	 * Default Constructor <br><br>
 	 * Sets the layout to BorderLayout, fills WEST with a FileTree and CENTER with a Wall
+     * Initiates entire Swing visualization.
 	 */
 	public Core(){
 		World.core = this;
@@ -27,6 +28,7 @@ public class Core extends JPanel {
 		setLayout(new BorderLayout());
 		
 		FileTree filetree = new FileTree();
+
 //		Wall wall = new Wall();
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, filetree, wall);

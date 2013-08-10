@@ -12,14 +12,14 @@ public class MiscSQL {
     public static HashMap<String, Boolean> optimizePathModifications(ArrayList<File> files) {
         final Boolean initBool = false;
         // TODO : Has the flaw that it might fail if two users have the same path. Add unique Path limiter
-        ResultSet sqlResult = World.dbc.query("Select * from Paths");
+        ResultSet sqlResult = World.dbc.query(SQLBuilder.QUERY_PATHS);
         HashMap<String, Boolean> currentPaths = new HashMap<String, Boolean>();
         try {
             while (sqlResult.next()) {
                 currentPaths.put(sqlResult.getString("Path"), initBool);
             }
         } catch (SQLException e) {
-            sout("MiscSQL threw a SQLException");
+            sout("MiscSQL threw a SQLException reading ResultSet");
         }
         for (File file : files) {
             String path = file.getAbsolutePath();
@@ -35,7 +35,7 @@ public class MiscSQL {
     @Deprecated
     public static ArrayList<File> resolvePathConflicts(ArrayList<File> files) {
         final Boolean initBool = false;
-        ResultSet sqlResult = World.dbc.query("Select * from Paths");
+        ResultSet sqlResult = World.dbc.query(SQLBuilder.QUERY_PATHS);
         HashMap<String, Boolean> currentPaths = new HashMap<String, Boolean>();
         try {
             while (sqlResult.next()) {

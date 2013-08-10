@@ -1,12 +1,11 @@
 package santhoshTree;
 
-import java.util.ArrayList;
-import java.util.Stack;
-
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import java.util.ArrayList;
+import java.util.Stack;
 
 //@author Santhosh Kumar T - santhosh@in.fiorano.com 
 public class CheckTreeSelectionModel extends DefaultTreeSelectionModel{ 
@@ -96,9 +95,13 @@ public class CheckTreeSelectionModel extends DefaultTreeSelectionModel{
 			}else 
 				super.addSelectionPaths(new TreePath[]{ path}); 
 		} 
-	} 
+	}
 
-	// tells whether all siblings of given path are selected. 
+    /**
+     * Tells whether all siblings of given path are selected.
+     * @param path
+     * @return
+     */
 	private boolean areSiblingsSelected(TreePath path){ 
 		TreePath parent = path.getParentPath(); 
 		if(parent==null) 
@@ -115,8 +118,12 @@ public class CheckTreeSelectionModel extends DefaultTreeSelectionModel{
 				return false; 
 		} 
 		return true; 
-	} 
+	}
 
+    /**
+     *
+     * @param paths
+     */
 	public void removeSelectionPaths(TreePath[] paths){ 
 		for(int i = 0; i<paths.length; i++){ 
 			TreePath path = paths[i]; 

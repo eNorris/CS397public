@@ -21,9 +21,9 @@ public class CoreMenu extends JMenuBar{
 
     private static final long serialVersionUID = -6260232465922104398L;
 
-    JTextField searchbox = new JTextField(20);
-    JButton searchbutton = new JButton("Search");
-    JButton searchclearbutton = new JButton("Clear Search");
+    JTextField searchBox = new JTextField(20);
+    JButton searchButton = new JButton("Search");
+    JButton searchClearButton = new JButton("Clear Search");
 
     public Core owner = null;
 
@@ -35,18 +35,18 @@ public class CoreMenu extends JMenuBar{
         add(generateCrawlerMenu());
         add(generateHelpMenu());
 
-        searchbox.addActionListener(new SearchTextHandler());
-        searchbutton.addActionListener(new SearchButtonHandler());
-        searchclearbutton.addActionListener(new SearchClearButtonHandler());
-        add(searchbox);
-        add(searchbutton);
-        add(searchclearbutton);
+        searchBox.addActionListener(new SearchTextHandler());
+        searchButton.addActionListener(new SearchButtonHandler());
+        searchClearButton.addActionListener(new SearchClearButtonHandler());
+        add(searchBox);
+        add(searchButton);
+        add(searchClearButton);
     }
 
     private class SearchTextHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (!searchbox.getText().isEmpty()) {
-                Wall.showSearchLib = searchbox.getText();
+            if (!searchBox.getText().isEmpty()) {
+                Wall.showSearchLib = searchBox.getText();
                 owner.wall.repaint();
             } else if(!Wall.showSearchLib.equals("")){
                 Wall.showSearchLib = "";
@@ -57,8 +57,8 @@ public class CoreMenu extends JMenuBar{
 
     private class SearchButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (!searchbox.getText().isEmpty()) {
-                Wall.showSearchLib = searchbox.getText();
+            if (!searchBox.getText().isEmpty()) {
+                Wall.showSearchLib = searchBox.getText();
                 owner.wall.repaint();
             } else if(!Wall.showSearchLib.equals("")){
                 Wall.showSearchLib = "";
@@ -69,8 +69,8 @@ public class CoreMenu extends JMenuBar{
 
     private class SearchClearButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (!searchbox.getText().isEmpty()) {
-                searchbox.setText("");
+            if (!searchBox.getText().isEmpty()) {
+                searchBox.setText("");
                 if(!Wall.showSearchLib.equals("")){
                     Wall.showSearchLib = "";
                     owner.wall.repaint();
@@ -241,11 +241,11 @@ public class CoreMenu extends JMenuBar{
                     e1.printStackTrace();
                 }
             }
-            World.dbc.query(
+            World.dbc.execute(
                     SQLBuilder.modifyPaths(
                             MiscSQL.optimizePathModifications(World.crawlerDirs)));
 
-            Executor exe =Executors.newCachedThreadPool();
+            Executor exe = Executors.newCachedThreadPool();
             exe.execute(new ExecSQL());
         }
     }
@@ -268,31 +268,4 @@ public class CoreMenu extends JMenuBar{
             });
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -7,6 +7,10 @@ import javax.swing.*;
 
 /**
  * TODO List:
+ *
+ * Add sql queue, for mutexed sql transactions
+ * Modify FileTree and the whole santhosh tree to initially pull from Paths Table
+ *
  * Finish the scheduler
  * Create notification when the DB is updated and update currentLib in a non-ugly way
  * Make a real name for our application
@@ -14,7 +18,9 @@ import javax.swing.*;
  * 
  * 
  * === NOTES: ===
- * 
+ *
+ * Implement User creation when first starting. For now I am manually putting it in database.
+ *
  * I commented out a bunch of code that will still be in development for a while
  * 
  * The user can select single files or directories again for the crawler
@@ -34,7 +40,6 @@ import javax.swing.*;
  *   so only one Wall can ever exist at any time (which would make sense).
  */
 
-
 public class MainApplication extends JFrame{
 	
 	private static final long serialVersionUID = 4648172894076113183L;
@@ -43,11 +48,11 @@ public class MainApplication extends JFrame{
     public static void sout(String out) {
         System.out.println(out);
     }
+
     public static String getUsername() {
         return username;
     }
-	MainApplication(){}
-	
+
 	public static void main(String[] args){
         sout("Debug Console...");
         sout("Running in directory [" + System.getProperty("user.dir") + "]");
@@ -63,7 +68,7 @@ public class MainApplication extends JFrame{
 				return;
 			}
 		}
-		sout("Connected to database: " + World.dbc.getDBPath() + "\n\n");
+		sout("Connected to database: " + World.dbc.getDBPath());
 
 		JFrame frame = new JFrame();
 		
@@ -78,7 +83,7 @@ public class MainApplication extends JFrame{
 		frame.setVisible(true);
 	}
 	
-	public void finalize(){
+	public void finalize() {
 		if(World.dbc != null)
 			World.dbc.disconnect();
 	}
