@@ -218,6 +218,10 @@ public class CoreMenu extends JMenuBar{
 
         @Override
         public void doOnSelection(ActionEvent ev) {
+            launchCrawler();
+        }
+
+        private void launchCrawler() {
             TreePath[] treePath = World.treeManager.getSelectionModel().getSelectionPaths();
 
             World.crawlerDirs.clear();

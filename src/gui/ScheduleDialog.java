@@ -1,13 +1,7 @@
 package gui;
 
-import java.awt.FlowLayout;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class ScheduleDialog extends JDialog{
 
@@ -47,5 +41,4 @@ public class ScheduleDialog extends JDialog{
 		add(okButton);
 		add(cancelButton);
 	}
-
 }

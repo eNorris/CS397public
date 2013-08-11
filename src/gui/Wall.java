@@ -167,24 +167,3 @@ System.out.print("Should repaint now!");
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

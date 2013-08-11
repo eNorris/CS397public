@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MediaFile extends Component{
-
+public class MediaFile extends IndexedFile {
 
     private static final long serialVersionUID = -5359135092454708630L;
 
@@ -258,13 +257,11 @@ public class MediaFile extends Component{
         m_popUp.show(caller, x, y);
     }
 
-/*
-    public void popUpInfo(Component caller, int x, int y){
-        m_infoPopup.setEnabled(true);
-        m_infoPopup.setVisible(true);
-        m_infoPopup.show(caller, x, y);
-    }
-*/
+//    public void popUpInfo(Component caller, int x, int y){
+//        m_infoPopup.setEnabled(true);
+//        m_infoPopup.setVisible(true);
+//        m_infoPopup.show(caller, x, y);
+//    }
 
     //Author: Mkyong
     //http://www.mkyong.com/java/how-to-resize-an-image-in-java/

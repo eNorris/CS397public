@@ -1,13 +1,18 @@
 package searchEngine;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.net.URL;
-
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
+import java.net.URL;
 
 public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 	public static javax.swing.plaf.ComponentUI createUI(JComponent c) {
@@ -62,7 +67,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 	}
 
 	@Override protected KeyListener createKeyListener() {
-		if(keyListener==null) {
+		if(keyListener == null) {
 			keyListener = new KeyAdapter() {};
 		}
 		return keyListener;
@@ -73,7 +78,7 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 		@Override public void actionPerformed(ActionEvent e) {
 			comboBox.setPopupVisible(false);
 			Object o = listBox.getSelectedValue();
-			if(o==null) o = comboBox.getItemAt(0);
+			if(o == null) o = comboBox.getItemAt(0);
 			System.out.println(o + ": " +comboBox.getEditor().getItem());
 		}
 	};
@@ -238,11 +243,11 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 		@Override public void paintIcon(Component c, Graphics g, int x, int y) {
 			Graphics2D g2 = (Graphics2D)g;
 			g2.setPaint(Color.GRAY);
-			g2.translate(x,y);
+			g2.translate(x, y);
 			g2.drawLine( 2, 3, 6, 3 );
 			g2.drawLine( 3, 4, 5, 4 );
 			g2.drawLine( 4, 5, 4, 5 );
-			g2.translate(-x,-y);
+			g2.translate(-x, -y);
 		}
 		@Override public int getIconWidth()  { return 9; }
 		@Override public int getIconHeight() { return 9; }
@@ -275,8 +280,8 @@ public class BasicSearchBarComboBoxUI extends SearchBarComboBoxUI{
 			super.paintComponent(g);
 
 			Insets i = getInsets();
-			int x = r.width-i.right-triangleIcon.getIconWidth()-2;
-			int y = i.top+(r.height-i.top-i.bottom-triangleIcon.getIconHeight())/2;
+			int x = r.width - i.right - triangleIcon.getIconWidth() - 2;
+			int y = i.top + (r.height - i.top - i.bottom - triangleIcon.getIconHeight()) / 2;
 			triangleIcon.paintIcon(this, g, x, y);
 		}
 		@Override public Dimension getPreferredSize() {

@@ -1,13 +1,12 @@
 package santhoshTree;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JCheckBox;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class CheckTreeManager extends MouseAdapter implements TreeSelectionListener{ 
 	private CheckTreeSelectionModel selectionModel; 
@@ -16,7 +15,14 @@ public class CheckTreeManager extends MouseAdapter implements TreeSelectionListe
 
 	public CheckTreeManager(JTree tree){ 
 		this.tree = tree; 
-		selectionModel = new CheckTreeSelectionModel(tree.getModel()); 
+		selectionModel = new CheckTreeSelectionModel(tree.getModel());
+
+        // TODO : Improve selection here
+        ArrayList<TreePath> treePaths = InstantiateTree.checkTreeFromDatabase();
+        for (TreePath treePath : treePaths) {
+            selectionModel.addSelectionPath(treePath);
+        }
+
 		tree.setCellRenderer(new CheckTreeCellRenderer(tree.getCellRenderer(), selectionModel)); 
 		tree.addMouseListener(this); 
 		selectionModel.addTreeSelectionListener(this); 
@@ -24,12 +30,14 @@ public class CheckTreeManager extends MouseAdapter implements TreeSelectionListe
 
 	public void mouseClicked(MouseEvent me){ 
 		TreePath path = tree.getPathForLocation(me.getX(), me.getY()); 
-		if(path==null) 
+		if(path == null)
 			return; 
-		if(me.getX()>tree.getPathBounds(path).x+hotspot) 
-			return; 
+		if(me.getX() > tree.getPathBounds(path).x + hotspot)
+			return;
 
-		boolean selected = selectionModel.isPathSelected(path, true); 
+//        new TreePath(Object[] path, Object lastPathComponent);
+
+		boolean selected = selectionModel.isPathSelected(path, true);
 		selectionModel.removeTreeSelectionListener(this); 
 
 		try{ 

@@ -22,7 +22,7 @@ public class DBUtil {
     private String DBUsername = "sa";
     private String DBPassword = "";
 
-    public static final String createTablesSql = System.getProperty("user.dir")+"\\CreateTables.sql";
+    public static final String createTablesSql = System.getProperty("user.dir") + "\\CreateTables.sql";
     public static final File createTablesSqlFile = new File(createTablesSql);
 
     // Only exists for testing until Spring is implemented
@@ -105,7 +105,7 @@ public class DBUtil {
             if (forceExist) {
                 connection = DriverManager.getConnection(DBArg, DBUsername, DBPassword); //connect normally, creates if doesn't exist by default
             } else {
-                connection = DriverManager.getConnection(DBArg+"ifexists=true", DBUsername, DBPassword); // ensure it exists, fail otherwise
+                connection = DriverManager.getConnection(DBArg + "ifexists=true", DBUsername, DBPassword); // ensure it exists, fail otherwise
                 statement = connection.createStatement();
                 connectionEstablished = true;
                 return true;
@@ -242,7 +242,7 @@ public class DBUtil {
 //        execute("DROP ALL OBJECTS DELETE FILES");
 //        disconnect();
 //        //Remove the now empty database directory
-//        new File(System.getProperty("user.dir")+"\\"+DBPath).delete();
+//        new File(System.getProperty("user.dir") + "\\" + DBPath).delete();
 //        return true;
 //    }
 

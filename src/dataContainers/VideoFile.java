@@ -112,5 +112,4 @@ public class VideoFile extends MediaFile {
 		}
 		return toReturn;
 	}
-
 }

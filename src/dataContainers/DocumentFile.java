@@ -56,5 +56,4 @@ public class DocumentFile extends MediaFile {
 			});
 		}
 	}
-
 }

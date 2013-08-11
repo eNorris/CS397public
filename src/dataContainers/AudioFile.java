@@ -71,5 +71,4 @@ public class AudioFile extends MediaFile{
 		AudioFile toReturn = new AudioFile(filepath, imgPath, parent);
 		return toReturn;
 	}
-
 }

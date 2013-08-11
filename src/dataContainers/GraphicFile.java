@@ -72,18 +72,4 @@ public class GraphicFile extends MediaFile{
 		GraphicFile toReturn = new GraphicFile(filepath, filepath, parent);
 		return toReturn;
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

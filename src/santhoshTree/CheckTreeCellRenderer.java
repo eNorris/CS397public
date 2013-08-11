@@ -1,12 +1,9 @@
 package santhoshTree;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-
-import javax.swing.JPanel;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
+import java.awt.*;
 
 public class CheckTreeCellRenderer extends JPanel implements TreeCellRenderer{ 
 
@@ -22,13 +19,12 @@ public class CheckTreeCellRenderer extends JPanel implements TreeCellRenderer{
         setOpaque(false); 
         checkBox.setOpaque(false); 
     } 
- 
- 
+
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus){ 
         Component renderer = delegate.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus); 
  
         TreePath path = tree.getPathForRow(row); 
-        if(path!=null){ 
+        if(path != null){
             if(selectionModel.isPathSelected(path, true)) 
                 checkBox.setState(Boolean.TRUE); 
             else 
