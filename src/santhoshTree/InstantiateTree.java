@@ -27,6 +27,7 @@ public class InstantiateTree {
             sout("InstantiateTree threw a SQLException reading ResultSet");
         }
 
+// TODO : Build FileSystemModels instead of TreePaths
 //        for (String path : hashedPaths.keySet()) {
 //            File file = new File(path);
 //            Stack<File> fileStack = new Stack<File>();

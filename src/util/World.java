@@ -1,5 +1,7 @@
 package util;
 
+import dataContainers.IndexedFile;
+import dataContainers.views.FileHash;
 import gui.Core;
 import gui.ScheduleFrame;
 import santhoshTree.CheckTreeManager;
@@ -18,6 +20,7 @@ public class World {
 	public static ScheduleFrame scheduleFrame = null;
 	public static Core core = null;
 	public static DBUtil dbc = null;
+    private static FileHash<String, IndexedFile> hash = new FileHash<String, IndexedFile>();
 	
 	public static boolean SQLDEBUG = true;
 	
@@ -25,4 +28,8 @@ public class World {
 		if(dbc != null)
 			dbc.disconnect();
 	}
+
+    public static FileHash<String, IndexedFile> getHash() {
+        return hash;
+    }
 }

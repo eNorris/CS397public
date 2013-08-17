@@ -1,6 +1,8 @@
 package dataContainers.views;
 
+import dataContainers.IndexedFile;
 import org.apache.commons.io.FilenameUtils;
+import util.World;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,43 +11,65 @@ import java.util.ArrayList;
 public class View {
     private final static View ROOT = null;
     private final static View EMPTY_VIEW = null;
+    public static View ROOT_VIEW;
 
-    private View parent;
-    private boolean directory;    // True if view is a directory
-    private String fullPath, name;
-    private File file;
+    static {
+        ROOT_VIEW = new View(null);
+    }
+
+    private IndexedFile file;
+    private View parent = null;
 
     private ArrayList<View> subViews;
     private ArrayList<View> subDirectories;
     private long subViewCount = 0;
     private long subDirectoryCount = 0;
 
-    public View(final File file) throws IOException {
+    public View(final IndexedFile file) {
         this.file = file;
-        this.fullPath = file.getCanonicalPath();
-        this.name = FilenameUtils.getBaseName(this.fullPath);
-        this.directory = file.isDirectory();
-//        this.ext = FilenameUtils.getExtension(this.fullPath);
+        if (isDirectory()) {
+            subViews = new ArrayList<View>();
+            subDirectories = new ArrayList<View>();
+        }
     }
 
     /**
      * This function recursively builds a View tree.
      * @param currentFile the file for which the current View is being created.
      * @return the created view for the current file
-     * @throws IOException
      */
-    public View rootView(File currentFile) throws IOException {
+    public View rootView(IndexedFile currentFile) {
         View view = new View(currentFile);
-        if (currentFile.exists()) {
-            if (isDirectory()) {
+        if (currentFile.getFile().exists()) {
+            if (currentFile.isDirectory()) {
                 File[] files = currentFile.listFiles();
-                assert files != null;
-                for (File file : files) {
-                    String filename = FilenameUtils.getName(file.getName());
-                    if (filename.equals(".") || filename.equals("..")) {
-                        View child = rootView(file);
-                        child.setParent(this);
-                        addView(child);
+                if (files != null) {
+                    for (File file : files) {
+                        String filename = FilenameUtils.getName(file.getName());
+                        if (!(filename.equals(".") || filename.equals(".."))) {
+                            View child = null;
+                            try {
+                                child = rootView(World.getHash().get(file.getCanonicalPath()));
+                            } catch (IOException e) {
+                                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                            }
+                            child.setParent(view);
+                            view.addView(child);
+//                            if (child.isDirectory()) {
+//                                // TODO : Clean bubbleUp functions to one call, and make more efficient
+//                                // TODO : Parent should interact with child, not the other way
+//                                bubbleUpAddDirectory();
+//                            } else {
+//                                bubbleUpAddFile();
+//                            }
+                            if (child.isDirectory()) {
+                                subViewCount += child.getSubViewCount();
+                                subDirectoryCount += child.getSubDirectoryCount();
+                            }
+                            else {
+                                subViewCount += 1;
+                            }
+                        }
                     }
                 }
             }
@@ -56,40 +80,48 @@ public class View {
     /**
      * This function starts the initial view tree creation.
      * @param path a path to the file for the root of the View tree.
-     * @throws IOException
+     * @return
      */
-    public void rootView(String path) throws IOException {
+    public View rootView(String path) {
         parent = ROOT;
-        rootView(new File(path));
+        // TODO : Access hashed IndexedFile here
+        return rootView(new IndexedFile(path));
     }
 
     public String getName() {
         return file.getName();
     }
 
-    public String getFullPath() {
-        return fullPath;
-    }
-
-    public File getFile() {
+    public IndexedFile getFile() {
         return file;
     }
 
-    public void setDirectory(boolean directory) {
-        this.directory = directory;
+    public View getParent() {
+        return parent;
+    }
+
+    public long getSubViews() {
+        return isDirectory() ? subViews.size() : 0;
+    }
+
+    public long getSubDirectories() {
+        return isDirectory() ? subDirectories.size() : 0;
+    }
+
+    public long getSubViewCount() {
+        return subViewCount;
+    }
+
+    public long getSubDirectoryCount() {
+        return subDirectoryCount;
     }
 
     public void setParent(View parent) {
         this.parent = parent;
     }
 
-    // Todo: Update file in system
-//    public void setFile(MediaFile file) {
-//        this.file = file;
-//    }
-
     public boolean isDirectory() {
-        return directory;
+        return file.isDirectory();
     }
 
     public boolean addView(View view) {
@@ -105,6 +137,9 @@ public class View {
         return true;
     }
 
+    /**
+     * Increases the count of all parent Views by 1
+     */
     public void bubbleUpAddFile() {
         this.subViewCount++;
         if (parent != ROOT) {
@@ -138,12 +173,11 @@ public class View {
      * @param nameFilter
      * @return new File View if the name matches, new Directory View if any subfiles match,
      * otherwise null.
-     * @throws IOException
      */
-    private View filterByName(String nameFilter) throws IOException {
+    private View filterByName(String nameFilter) {
         View clone = new View(this.file);
         if (isDirectory()) {
-            // Currently kept seperate in case a fileNameFilter is implemented
+            // Currently kept separate in case a fileNameFilter is implemented
             for (View file : subViews) {
                 View subView = file.filterByName(nameFilter);
                 if (subView != EMPTY_VIEW) {
@@ -162,7 +196,7 @@ public class View {
                 return clone;
             }
         }
-        else if (this.name.contains(nameFilter)) {
+        else if (this.file.getName().contains(nameFilter)) {
             return clone;
         }
         return EMPTY_VIEW;

@@ -23,43 +23,20 @@ public class MediaFile extends IndexedFile {
         BYTE, KB, MB, GB
     }
 
-    public File file = null;
     public Image thumbnail = null;
     public String description = null;
     public int fileSize = 0;
     public FileSizeEnum fileSizeType = FileSizeEnum.BYTE;
 
-    public MediaLibrary owner = null;
     protected MediaFilePopUp m_popUp = new MediaFilePopUp(this);
-
-    /**Name of the file without extension ("C:\temp\file.txt" => "file")*/
-    public String fileName = null;
-
-    /**Extension of the file ("C:\temp\file.txt" => "txt")*/
-    public String fileExt = null;
 
     public int x = 0, y = 0, w = 0, h = 0;
 
     // Uncomment this when InfoPopUp is working
 //	public SpaceTimeListener spaceListener = new SpaceTimeListener(this);
 
-    /**
-     * Base constructor
-     * @param file - The file that this mediafile links to
-     * @param owner - medialibrary that owns the file
-     */
-    public MediaFile(File file, MediaLibrary owner){
-        setFile(file);
-        this.owner = owner;
-    }
-
-    /**
-     * String constructor
-     * @param filePath - fully qualified path to the file
-     * @param owner - medialibrary that owns the file
-     */
-    public MediaFile(String filePath, MediaLibrary owner){
-        this(new File(filePath), owner);
+    public MediaFile(File file, MediaLibrary owner) {
+        super(file, owner);
     }
 
     /**
@@ -79,7 +56,7 @@ public class MediaFile extends IndexedFile {
      * @param owner - medialibrary that owns the file
      */
     public MediaFile(File file, File imgFile, MediaLibrary owner){
-        this(file, owner);
+        super(file, owner);
         loadImg(imgFile);
     }
 
@@ -93,8 +70,6 @@ public class MediaFile extends IndexedFile {
         resolveFileSize();
 
         description = null;
-        fileName = null;
-        fileExt = null;
     }
 
     protected void resolveFileSize(){
