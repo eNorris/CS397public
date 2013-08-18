@@ -17,7 +17,7 @@ public class View {
         ROOT_VIEW = new View(null);
     }
 
-    private IndexedFile file;
+    private IndexedFile index;
     private View parent = null;
 
     private ArrayList<View> subViews;
@@ -26,8 +26,11 @@ public class View {
     private long subDirectoryCount = 0;
 
     public View(final IndexedFile file) {
-        this.file = file;
-        if (isDirectory()) {
+        if (file == null) {
+            return;
+        }
+        this.index = file;
+        if (file.isDirectory()) {
             subViews = new ArrayList<View>();
             subDirectories = new ArrayList<View>();
         }
@@ -35,8 +38,8 @@ public class View {
 
     /**
      * This function recursively builds a View tree.
-     * @param currentFile the file for which the current View is being created.
-     * @return the created view for the current file
+     * @param currentFile the index for which the current View is being created.
+     * @return the created view for the current index
      */
     public View rootView(IndexedFile currentFile) {
         View view = new View(currentFile);
@@ -62,7 +65,7 @@ public class View {
 //                            } else {
 //                                bubbleUpAddFile();
 //                            }
-                            if (child.isDirectory()) {
+                            if (child.getIndex().isDirectory()) {
                                 subViewCount += child.getSubViewCount();
                                 subDirectoryCount += child.getSubDirectoryCount();
                             }
@@ -79,7 +82,7 @@ public class View {
 
     /**
      * This function starts the initial view tree creation.
-     * @param path a path to the file for the root of the View tree.
+     * @param path a path to the index for the root of the View tree.
      * @return
      */
     public View rootView(String path) {
@@ -89,11 +92,11 @@ public class View {
     }
 
     public String getName() {
-        return file.getName();
+        return index.getName();
     }
 
-    public IndexedFile getFile() {
-        return file;
+    public IndexedFile getIndex() {
+        return index;
     }
 
     public View getParent() {
@@ -101,11 +104,11 @@ public class View {
     }
 
     public long getSubViews() {
-        return isDirectory() ? subViews.size() : 0;
+        return index.isDirectory() ? subViews.size() : 0;
     }
 
     public long getSubDirectories() {
-        return isDirectory() ? subDirectories.size() : 0;
+        return index.isDirectory() ? subDirectories.size() : 0;
     }
 
     public long getSubViewCount() {
@@ -120,12 +123,8 @@ public class View {
         this.parent = parent;
     }
 
-    public boolean isDirectory() {
-        return file.isDirectory();
-    }
-
     public boolean addView(View view) {
-        if (view.isDirectory()) {
+        if (view.getIndex().isDirectory()) {
             subDirectories.add(view);
             bubbleUpAddDirectory();
         }
@@ -175,8 +174,8 @@ public class View {
      * otherwise null.
      */
     private View filterByName(String nameFilter) {
-        View clone = new View(this.file);
-        if (isDirectory()) {
+        View clone = new View(this.index);
+        if (index.isDirectory()) {
             // Currently kept separate in case a fileNameFilter is implemented
             for (View file : subViews) {
                 View subView = file.filterByName(nameFilter);
@@ -196,7 +195,7 @@ public class View {
                 return clone;
             }
         }
-        else if (this.file.getName().contains(nameFilter)) {
+        else if (this.index.getName().contains(nameFilter)) {
             return clone;
         }
         return EMPTY_VIEW;

@@ -41,6 +41,7 @@ public class IndexedFile extends Component {
 
     public IndexedFile(File file) {
         if (file != null) {
+            this.file = file;
             try {
                 this.fullPath = file.getCanonicalPath();
             } catch (IOException e) {
