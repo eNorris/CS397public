@@ -41,7 +41,7 @@ public class Crawler {
      * Calls the crawler to crawl all files within the directory
      * @param directory directory to be crawled
      */
-    private static void crawlDirectory(File directory) {
+    protected static void crawlDirectory(File directory) {
         for (File file : directory.listFiles()) {
             crawl(file);
         }

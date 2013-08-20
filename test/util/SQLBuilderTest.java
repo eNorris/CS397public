@@ -14,7 +14,7 @@ public class SQLBuilderTest {
         Assert.assertEquals(SQLBuilder.addUser(username, password),
         "Insert into User Values ('" + username + "', '" + password + "');");
         Assert.assertEquals(SQLBuilder.addUser(username, emptyPassword),
-        "Insert into User Values ('" + username + "', '" + password + "');");
+        "Insert into User Values ('" + username + "', '" + emptyPassword + "');");
     }
 
     @Test
@@ -34,5 +34,10 @@ public class SQLBuilderTest {
         Assert.assertTrue(SQLBuilder.addUser(username, null).isEmpty());
         Assert.assertTrue(SQLBuilder.addUser(empty   , null).isEmpty());
         Assert.assertTrue(SQLBuilder.addUser(null    , null).isEmpty());
+    }
+
+    @Test
+    public void modifyPaths() {
+
     }
 }

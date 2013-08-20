@@ -1,5 +1,6 @@
 package dataContainers.views;
 
+import auxil.TestConstants;
 import dataContainers.IndexedFile;
 import junit.framework.Assert;
 import org.apache.commons.io.FilenameUtils;
@@ -9,11 +10,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ViewTest {
-
-    private final static String ROOT_TEST_FILES = "testFiles/viewTest";
+    private final static String ROOT_TEST_FILES = TestConstants.TEST_DIR + "/viewTest";
     private final static String SUBDIRECTORY = ROOT_TEST_FILES + "/" + "subDir";
     private final static String EMPTY_DIRECTORY = ROOT_TEST_FILES + "/" + "emptyDir";
     private final String file1Name = "TestA";
@@ -24,7 +23,6 @@ public class ViewTest {
     private final String file2Path = ROOT_TEST_FILES + "/" + file2Name;
     private final String file3Path = SUBDIRECTORY + "/" + file3Name;
     private final String file4Path = SUBDIRECTORY + "/" + file4Name;
-    private ArrayList<File> files = new ArrayList<File>();
 
     private File root = new File(ROOT_TEST_FILES);
     private File subDir = new File(SUBDIRECTORY);
@@ -97,9 +95,9 @@ public class ViewTest {
         View root = new View(null);
         View view = root.rootView(EMPTY_DIRECTORY);
 
-        Assert.assertEquals(0, view.getSubViews());
+        Assert.assertEquals(0, view.getSubFiles());
         Assert.assertEquals(0, view.getSubDirectories());
-        Assert.assertEquals(0, view.getSubViewCount());
+        Assert.assertEquals(0, view.getSubFileCount());
         Assert.assertEquals(0, view.getSubDirectoryCount());
         Assert.assertEquals(true, view.getIndex().isDirectory());
     }
@@ -109,24 +107,24 @@ public class ViewTest {
         View root = new View(null);
         View view = root.rootView(file1Path);
 
-        Assert.assertEquals(0, view.getSubViews());
+        Assert.assertEquals(0, view.getSubFiles());
         Assert.assertEquals(0, view.getSubDirectories());
-        Assert.assertEquals(0, view.getSubViewCount());
+        Assert.assertEquals(0, view.getSubFileCount());
         Assert.assertEquals(0, view.getSubDirectoryCount());
         Assert.assertEquals(false, view.getIndex().isDirectory());
     }
 
-//    @Test
-//    public void createViewTreeFull() {
-//        View root = new View(null);
-//        View view = root.rootView(ROOT_TEST_FILES);
-//
-//        Assert.assertEquals(2, view.getSubViews());
-//        Assert.assertEquals(2, view.getSubDirectories());
-//        Assert.assertEquals(2, view.getSubViewCount());
-//        Assert.assertEquals(0, view.getSubDirectoryCount());
-//        Assert.assertEquals(true, view.getIndex().isDirectory());
-//    }
+    @Test
+    public void createViewTreeFull() {
+        View root = new View(null);
+        View view = root.rootView(ROOT_TEST_FILES);
+
+        Assert.assertEquals(2, view.getSubFiles());
+        Assert.assertEquals(2, view.getSubDirectories());
+        Assert.assertEquals(4, view.getSubFileCount());
+        Assert.assertEquals(2, view.getSubDirectoryCount());
+        Assert.assertEquals(true, view.getIndex().isDirectory());
+    }
 
     @After
     public void cleanUp() {

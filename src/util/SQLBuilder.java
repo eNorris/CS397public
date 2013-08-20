@@ -17,10 +17,10 @@ public class SQLBuilder {
      */
     public static String addUser(final String username, final String password) {
         String sql = "";
-        if (username.isEmpty() || username == null) {
+        if (username == null) {
             return sql;
         }
-        if (password == null) {
+        if (password == null || username.isEmpty()) {
             return sql;
         }
         sql = "Insert into User Values ('"
@@ -43,12 +43,10 @@ public class SQLBuilder {
             if (paths.get(path)) {
                 sql += "Insert into Paths (Username, Path) Values('"
                         + getUsername() + "', '"
-                        + path
-                        + "');";
+                        + path          + "');";
             } else {
                 sql += "Delete from Paths Where Path='"
-                        + path
-                        + "';";
+                        + path + "';";
             }
         }
         return sql;

@@ -17,23 +17,28 @@ public class View {
         ROOT_VIEW = new View(null);
     }
 
-    private IndexedFile index;
+    protected IndexedFile index;
     private View parent = null;
 
-    private ArrayList<View> subViews;
-    private ArrayList<View> subDirectories;
-    private long subViewCount = 0;
-    private long subDirectoryCount = 0;
+    protected ArrayList<View> subFiles;
+    protected ArrayList<View> subDirectories;
+    protected long subFileCount = 0;
+    protected long subDirectoryCount = 0;
+
+    public View() {
+    }
 
     public View(final IndexedFile file) {
         if (file == null) {
+            subFiles = new ArrayList<View>();
+            subDirectories = new ArrayList<View>();
             return;
         }
-        this.index = file;
         if (file.isDirectory()) {
-            subViews = new ArrayList<View>();
+            subFiles = new ArrayList<View>();
             subDirectories = new ArrayList<View>();
         }
+        this.index = file;
     }
 
     /**
@@ -54,24 +59,10 @@ public class View {
                             try {
                                 child = rootView(World.getHash().get(file.getCanonicalPath()));
                             } catch (IOException e) {
-                                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                                e.printStackTrace();
                             }
                             child.setParent(view);
                             view.addView(child);
-//                            if (child.isDirectory()) {
-//                                // TODO : Clean bubbleUp functions to one call, and make more efficient
-//                                // TODO : Parent should interact with child, not the other way
-//                                bubbleUpAddDirectory();
-//                            } else {
-//                                bubbleUpAddFile();
-//                            }
-                            if (child.getIndex().isDirectory()) {
-                                subViewCount += child.getSubViewCount();
-                                subDirectoryCount += child.getSubDirectoryCount();
-                            }
-                            else {
-                                subViewCount += 1;
-                            }
                         }
                     }
                 }
@@ -86,9 +77,25 @@ public class View {
      * @return
      */
     public View rootView(String path) {
-        parent = ROOT;
-        // TODO : Access hashed IndexedFile here
-        return rootView(new IndexedFile(path));
+        IndexedFile file = null;
+        try {
+            file = World.getHash().get(new File(path).getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (file == null) {
+            file = new IndexedFile(path);
+            World.getHash().put(file.getFullPath(), file);
+        }
+        View view = rootView(file);
+        view.setParent(this);
+        if (view.getIndex().isDirectory()) {
+            subDirectories.add(view);
+        }
+        else {
+            subFiles.add(view);
+        }
+        return view;
     }
 
     public String getName() {
@@ -103,16 +110,16 @@ public class View {
         return parent;
     }
 
-    public long getSubViews() {
-        return index.isDirectory() ? subViews.size() : 0;
+    public long getSubFiles() {
+        return index.isDirectory() ? subFiles.size() : 0;
     }
 
     public long getSubDirectories() {
         return index.isDirectory() ? subDirectories.size() : 0;
     }
 
-    public long getSubViewCount() {
-        return subViewCount;
+    public long getSubFileCount() {
+        return subFileCount;
     }
 
     public long getSubDirectoryCount() {
@@ -125,14 +132,15 @@ public class View {
 
     public boolean addView(View view) {
         if (view.getIndex().isDirectory()) {
-            subDirectories.add(view);
-            bubbleUpAddDirectory();
+            this.subDirectories.add(view);
+            this.subDirectoryCount += 1 + view.getSubDirectoryCount();
+            this.subFileCount += view.getSubFileCount();
         }
         else {
-            subViews.add(view);
-            bubbleUpAddFile();
+            this.subFiles.add(view);
+            this.subFileCount += 1;
         }
-//        Collections.sort(subViews);     // TODO : Add filters here
+//        Collections.sort(subFiles);     // TODO : Add filters here
         return true;
     }
 
@@ -140,31 +148,39 @@ public class View {
      * Increases the count of all parent Views by 1
      */
     public void bubbleUpAddFile() {
-        this.subViewCount++;
-        if (parent != ROOT) {
+        this.subFileCount++;
+        if (parent != ROOT_VIEW) {
             parent.bubbleUpAddFile();
         }
     }
 
     public void bubbleUpSubFile() {
-        this.subViewCount--;
-        if (parent != ROOT) {
+        this.subFileCount--;
+        if (parent != ROOT_VIEW) {
             parent.bubbleUpSubFile();
         }
     }
 
     public void bubbleUpAddDirectory() {
         this.subDirectoryCount++;
-        if (parent != ROOT) {
+        if (parent != ROOT_VIEW) {
             parent.bubbleUpAddDirectory();
         }
     }
 
     public void bubbleUpSubDirectory() {
         this.subDirectoryCount--;
-        if (parent != ROOT) {
+        if (parent != ROOT_VIEW) {
             parent.bubbleUpSubDirectory();
         }
+    }
+
+    private void addSubFileCount(long count) {
+        this.subFileCount += count;
+    }
+
+    private void addSubDirectoryCount(long count) {
+        this.subDirectoryCount += count;
     }
 
     /**
@@ -177,7 +193,7 @@ public class View {
         View clone = new View(this.index);
         if (index.isDirectory()) {
             // Currently kept separate in case a fileNameFilter is implemented
-            for (View file : subViews) {
+            for (View file : subFiles) {
                 View subView = file.filterByName(nameFilter);
                 if (subView != EMPTY_VIEW) {
                     clone.addView(subView);
@@ -191,7 +207,7 @@ public class View {
                     subDirectory.setParent(clone);
                 }
             }
-            if (subViews.size() + subDirectories.size() > 0) {
+            if (subFiles.size() + subDirectories.size() > 0) {
                 return clone;
             }
         }
@@ -199,6 +215,10 @@ public class View {
             return clone;
         }
         return EMPTY_VIEW;
+    }
+
+    public boolean isRoot() {
+        return this.equals(ROOT_VIEW);
     }
 }
 
