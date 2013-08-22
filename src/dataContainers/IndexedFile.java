@@ -14,8 +14,10 @@ public class IndexedFile extends Component {
     protected String name;          // Name of the file without extension ("C:\temp\file.txt" => "file")
     protected String ext = "";      // Extension of the file ("C:\temp\file.txt" => "txt")*/
     protected boolean directory;    // True if view is a directory
+    private MediaFile.FileTypeEnum type; // Type of File (O, A, S, V, T, M, I)
 
     protected MediaLibrary owner = null; // TODO : Remove after decoupling wall and file structures
+
     /**
      * Base constructor
      * @param file - The file that this mediafile links to
@@ -76,6 +78,10 @@ public class IndexedFile extends Component {
 
     public String getExt() {
         return ext;
+    }
+
+    public MediaFile.FileTypeEnum getType() {
+        return type;
     }
 
     public boolean isDirectory() {

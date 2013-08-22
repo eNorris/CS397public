@@ -17,8 +17,11 @@ import java.sql.SQLException;
 public class MediaFile extends IndexedFile {
 
     private static final long serialVersionUID = -5359135092454708630L;
-
-    /**Enumeration of possible file size types (Byte, kByte, MByte, GByte)*/
+    // Enumeration of possible file types (Object, Image, Video, Audio, Song, TV, Movie)
+    public static enum FileTypeEnum {
+        O, I, V, A, S, T, M
+    }
+    // Enumeration of possible file size types (Byte, kByte, MByte, GByte)
     public static enum FileSizeEnum{
         BYTE, KB, MB, GB
     }
@@ -269,62 +272,62 @@ public class MediaFile extends IndexedFile {
         g.drawImage(thumbnail, x + owner.space.ix, y + World.space.iy, null);
     }
 
-// Note: When you 
+// Note: When you
 /*
 	public class InfoPopup extends JPopupMenu{
 
 		private static final long serialVersionUID = -3564833458604078898L;
-		
+
 		public SpaceTimeInt space = new SpaceTimeInt();
-		
+
 		public boolean active = false;
 
 		public InfoPopup(){
 			setSize(200, 200);
-			
+
 			add(new JMenuItem("MediaFile::InfoPopup::cat"));
 			add(new JMenuItem("dog"));
 			// Add this back in when we have the InfoPopup working
 //			add(new InfoPanel());
 		}
-		
+
 		public void setVisible(boolean vis){
 			super.setVisible(vis);
 		}
-		
+
 		public void update(int x, int y){
 			if(active){
 				space.universalUpdate(x, y);
 			}
 		}
-		
+
 		public void activate(int x, int y){
 			space.wormHole(x, y);
 			active = true;
 			setVisible(true);
 		}
-		
+
 		public void deactivate(){
 			active = false;
 			setVisible(false);
 		}
-		
+
 		public void paint(Graphics g){
 			g.fillRect(0, 0, 200, 200);
 			super.paint(g);
 		}
-		
+
 		/ **
 		 * This is the popup menu that should show up when you hover over a mediafile in the Wall
 		 * /
 		public class InfoPanel extends JPanel{
 			private static final long serialVersionUID = 359115013335470480L;
-			
+
 			private Image m_playOn = null;
 			private Image m_playOff = null;
 			private Image m_stopOn = null;
 			private Image m_stopOff = null;
-			
+
 			private boolean m_playing = false;
 			private boolean m_hovering = false;
 
@@ -333,16 +336,16 @@ public class MediaFile extends IndexedFile {
 				add(new JLabel("what?"));
 				add(new JLabel("vox!"));
 				setOpaque(false);
-				
+
 				m_playOn = Util.loadImgRes("/play1Large.png");
 				m_playOff = Util.loadImgRes("/play2Large.png");
 				m_stopOn = Util.loadImgRes("/stop1Large.png");
 				m_stopOff = Util.loadImgRes("/stop2Large.png");
-				
+
 				setSize(500, 500);
 				setBackground(Color.RED);
 			}
-			
+
 			public void paint(Graphics g){
 				super.paint(g);
 				Image drawer = null;

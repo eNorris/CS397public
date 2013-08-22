@@ -1,6 +1,7 @@
 package dataContainers.views;
 
 import dataContainers.IndexedFile;
+import dataContainers.MediaFile;
 import org.apache.commons.io.FilenameUtils;
 import util.World;
 
@@ -9,16 +10,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class View {
-    private final static View ROOT = null;
     private final static View EMPTY_VIEW = null;
+    private final static IndexedFile ROOT_INDEX = null;
     public static View ROOT_VIEW;
 
     static {
-        ROOT_VIEW = new View(null);
+        ROOT_VIEW = new View(ROOT_INDEX);
     }
 
     protected IndexedFile index;
-    private View parent = null;
+    private View parent = EMPTY_VIEW;
 
     protected ArrayList<View> subFiles;
     protected ArrayList<View> subDirectories;
@@ -29,7 +30,7 @@ public class View {
     }
 
     public View(final IndexedFile file) {
-        if (file == null) {
+        if (file == ROOT_INDEX) {
             subFiles = new ArrayList<View>();
             subDirectories = new ArrayList<View>();
             return;
@@ -44,7 +45,7 @@ public class View {
     /**
      * This function recursively builds a View tree.
      * @param currentFile the index for which the current View is being created.
-     * @return the created view for the current index
+     * @return the created view for the current index.
      */
     public View rootView(IndexedFile currentFile) {
         View view = new View(currentFile);
@@ -55,7 +56,7 @@ public class View {
                     for (File file : files) {
                         String filename = FilenameUtils.getName(file.getName());
                         if (!(filename.equals(".") || filename.equals(".."))) {
-                            View child = null;
+                            View child = EMPTY_VIEW;
                             try {
                                 child = rootView(World.getHash().get(file.getCanonicalPath()));
                             } catch (IOException e) {
@@ -74,16 +75,16 @@ public class View {
     /**
      * This function starts the initial view tree creation.
      * @param path a path to the index for the root of the View tree.
-     * @return
+     * @return the view created for the passed path.
      */
     public View rootView(String path) {
-        IndexedFile file = null;
+        IndexedFile file = ROOT_INDEX;
         try {
             file = World.getHash().get(new File(path).getCanonicalPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (file == null) {
+        if (file == ROOT_INDEX) {
             file = new IndexedFile(path);
             World.getHash().put(file.getFullPath(), file);
         }
@@ -183,10 +184,11 @@ public class View {
         this.subDirectoryCount += count;
     }
 
+    // TODO : Find a way to reuse most of the filter code, duplication is bad!!!
     /**
      * Recursively builds a new trimmed View tree based on a name filter.
-     * @param nameFilter
-     * @return new File View if the name matches, new Directory View if any subfiles match,
+     * @param nameFilter String all accepted file-names(no path or extension) must contain.
+     * @return new File View if the name matches, new Directory View if any sub-files match,
      * otherwise null.
      */
     private View filterByName(String nameFilter) {
@@ -217,6 +219,124 @@ public class View {
         return EMPTY_VIEW;
     }
 
+    /**
+     * Recursively builds a new trimmed View tree based on an extension filter.
+     * @param extFilter ArrayList of all accepted extensions.
+     * @return new File View if an ext matches, new Directory View if any sub-files match,
+     * otherwise null.
+     */
+    private View filterByExtension(ArrayList<String> extFilter) {
+        View clone = new View(this.index);
+        if (index.isDirectory()) {
+            // Currently kept separate in case a fileNameFilter is implemented
+            for (View file : subFiles) {
+                View subView = file.filterByExtension(extFilter);
+                if (subView != EMPTY_VIEW) {
+                    clone.addView(subView);
+                    subView.setParent(clone);
+                }
+            }
+            for (View directory : subDirectories) {
+                View subDirectory = directory.filterByExtension(extFilter);
+                if (subDirectory != EMPTY_VIEW) {
+                    clone.addView(subDirectory);
+                    subDirectory.setParent(clone);
+                }
+            }
+            if (subFiles.size() + subDirectories.size() > 0) {
+                return clone;
+            }
+        }
+        else if (matchesExtension(this.index.getExt(), extFilter)) {
+            return clone;
+        }
+        return EMPTY_VIEW;
+    }
+
+    /**
+     * Determines if extensions contains toMatch.
+     * @param toMatch string to look for in the list of extensions.
+     * @param extensions list of extensions being filtered for.
+     * @return true if toMatch matches an extension in extensions.
+     */
+    public boolean matchesExtension(String toMatch, ArrayList<String> extensions) {
+        for (String extension : extensions) {
+            if (toMatch.equals(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Recursively builds a new trimmed View tree based on a type filter.
+     * @param types ArrayList of all accepted types.
+     * @return new File View if a type matches, new Directory View if any sub-files match,
+     * otherwise null.
+     */
+    private View filterByType(ArrayList<MediaFile.FileTypeEnum> types) {
+        View clone = new View(this.index);
+        if (index.isDirectory()) {
+            // Currently kept separate in case a fileNameFilter is implemented
+            for (View file : subFiles) {
+                View subView = file.filterByType(types);
+                if (subView != EMPTY_VIEW) {
+                    clone.addView(subView);
+                    subView.setParent(clone);
+                }
+            }
+            for (View directory : subDirectories) {
+                View subDirectory = directory.filterByType(types);
+                if (subDirectory != EMPTY_VIEW) {
+                    clone.addView(subDirectory);
+                    subDirectory.setParent(clone);
+                }
+            }
+            if (subFiles.size() + subDirectories.size() > 0) {
+                return clone;
+            }
+        }
+        else if (matchesType(this.index.getType(), types)) {
+            return clone;
+        }
+        return EMPTY_VIEW;
+    }
+
+    /**
+     * Determines if types contains toMatch.
+     * @param toMatch string to look for in the list of types.
+     * @param types list of types being filtered for.
+     * @return true if toMatch matches an extension in types.
+     */
+    public boolean matchesType(MediaFile.FileTypeEnum toMatch, ArrayList<MediaFile.FileTypeEnum> types) {
+        for (MediaFile.FileTypeEnum type : types) {
+            if (type.equals(MediaFile.FileTypeEnum.O)) {
+                return true;
+            }
+            if (type.equals(MediaFile.FileTypeEnum.A)) {
+                if (toMatch.equals(MediaFile.FileTypeEnum.A)
+                        || toMatch.equals(MediaFile.FileTypeEnum.S)) {
+                    return true;
+                }
+            }
+            if (type.equals(MediaFile.FileTypeEnum.V)) {
+                if (toMatch.equals(MediaFile.FileTypeEnum.V)
+                        || toMatch.equals(MediaFile.FileTypeEnum.M)
+                        || toMatch.equals(MediaFile.FileTypeEnum.T)) {
+                    return true;
+                }
+            }
+            if (toMatch.equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether this view is the root view.
+     * @return true if this is the root view, false otherwise.
+     */
     public boolean isRoot() {
         return this.equals(ROOT_VIEW);
     }
