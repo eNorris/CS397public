@@ -1,13 +1,20 @@
 package dataContainers.views;
 
+import com.jamesmurty.utils.XMLBuilder;
 import dataContainers.IndexedFile;
 import dataContainers.MediaFile;
 import org.apache.commons.io.FilenameUtils;
 import util.World;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class View {
     private final static View EMPTY_VIEW = null;
@@ -339,6 +346,132 @@ public class View {
      */
     public boolean isRoot() {
         return this.equals(ROOT_VIEW);
+    }
+
+    /**
+     * Creates a list of all Views for the current View tree for easy display.
+     * @param view Current view being added to the list.
+     * @param flattened List to add this View to.
+     * @return Current state of the flattened view, containing all previous Views, this, and all subViews.
+     */
+    public ArrayList<View> flattenViewDepthFirst(View view, ArrayList<View> flattened) {
+        if (view.getIndex().isDirectory()) {
+            for (View directory : view.subDirectories) {
+                flattened = flattenViewDepthFirst(directory, flattened);
+            }
+            for (View file : view.subFiles) {
+                flattened.add(file);
+            }
+        }
+        else {
+            flattened.add(view);
+        }
+        return flattened;
+    }
+
+    /**
+     * Locates the view that matches an indexed file.
+     * @param index IndexedFile to be found.
+     * @return View that matches, otherwise null.
+     */
+    public View findIndexedFile(IndexedFile index) {
+        if (index.equals(this.index)) {
+            return this;
+        }
+        if (this.index.isDirectory()) {
+            for (View directory : this.subDirectories) {
+                View view;
+                view = findIndexedFile(index);
+                if (view != null) {
+                    return view;
+                }
+            }
+            for (View file : this.subFiles) {
+                View view;
+                view = findIndexedFile(index);
+                if (view != null) {
+                    return view;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Deletes this View and any subViews. Removes all references to free up memory.
+     */
+    public void removeView() {
+        this.index = null;
+        this.subFiles = null;
+        this.subDirectories = null;
+        if (!this.parent.isRoot()) {
+            if (this.index.isDirectory()) {
+                this.parent.subDirectories.remove(this);
+                this.parent.bubbleUpSubDirectory();
+            }
+            else {
+                this.parent.subFiles.remove(this);
+                this.parent.bubbleUpSubFile();
+            }
+        }
+        else {
+            this.parent.subDirectories.remove(this);
+        }
+        if (this.index.isDirectory()) {
+            for (View child : this.subDirectories) {
+                child.removeView();
+            }
+            for (View child : this.subFiles) {
+                child.removeView();
+            }
+        }
+    }
+
+    /**
+     * Creates a XML file for saving a View to disk.
+     * @param path File path and name of save file.
+     */
+    public void buildXMLInitiate(String path) {
+        XMLBuilder builder = null;
+        try {
+            builder = XMLBuilder.create("ViewTree");
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        this.buildXML(builder);
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new FileOutputStream(path));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            builder.toWriter(writer, new Properties());
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Recursively explores a View while adding elements to an XMLBuilder.
+     * @param builder XMLBuilder creating saved View.
+     * @return current state of the XMLBuilder.
+     */
+    public XMLBuilder buildXML(XMLBuilder builder) {
+        if (this.index.isDirectory()) {
+            builder.e("Directory").t(this.index.getFullPath());
+            for (View directory : this.subDirectories) {
+                builder = directory.buildXML(builder);
+            }
+            for (View file : this.subFiles) {
+                builder = file.buildXML(builder);
+            }
+        }
+        else {
+            builder.e("File").t(this.index.getFullPath());
+        }
+        builder.up();
+        return builder;
     }
 }
 
